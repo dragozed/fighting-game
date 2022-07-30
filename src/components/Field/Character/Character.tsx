@@ -23,7 +23,8 @@ export const Character: React.FC<CharacterProps> = ({
   const [skillDamage, setSkillDamage] = useState(0);
   const [healthPoints, setHealthPoints] = useState(0);
   const [skillCount, setSkillCount] = useState(0);
-  const [skillName, setSkillName] = useState("none");
+  const [skillName, setSkillName] = useState("");
+  const [skillTarget, setSkillTarget] = useState("");
 
   useEffect(() => {
     //trigger on first render only(or charactername changes)
@@ -31,9 +32,15 @@ export const Character: React.FC<CharacterProps> = ({
     setHealthPoints(characterStatsCalculator(characterName).healthPoints);
     setSkillCount(characterStatsCalculator(characterName).skillCount);
     setSkillName(characterStatsCalculator(characterName).skillName);
-    setSkillDamage(characterStatsCalculator(characterName).skillDamage);
+    setSkillDamage(characterStatsCalculator(characterName).skillDamage / 2);
     getCharacterName(characterName);
   }, [characterName]);
+
+  useEffect(() => {
+    setSkillTarget(
+      characterName === "character1" ? "character2" : "character1"
+    );
+  }, []);
 
   useEffect(() => {
     //if damagedFlag is updated and damagedFlag ==true
@@ -50,6 +57,7 @@ export const Character: React.FC<CharacterProps> = ({
         skillName={skillName}
         getDamageInfo={getDamageInfo}
         skillDamage={skillDamage}
+        skillTarget={skillTarget}
       />
     </>
   );

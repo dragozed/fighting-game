@@ -14,6 +14,7 @@ export const Field: React.FC<FieldProps> = () => {
   const getDamageInfo = (skilldamage: number, targetname: string): void => {
     setDamagedFlag1(false);
     setDamagedFlag2(false);
+    console.log(damagedFlag1, damagedFlag2);
     if (damagedFlag1 === false && damagedFlag2 === false) {
       checkDamagedCharacter(targetname, characterNames);
     }
@@ -36,6 +37,11 @@ export const Field: React.FC<FieldProps> = () => {
       setDamagedFlag1(false);
       setDamagedFlag2(false);
     }
+    setTimeout(() => {
+      //can not set these false in a reasonable place
+      setDamagedFlag1(false);
+      setDamagedFlag2(false);
+    }, 100);
   }
 
   return (

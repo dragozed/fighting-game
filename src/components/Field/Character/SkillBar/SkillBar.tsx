@@ -6,6 +6,7 @@ interface SkillBarProps {
   skillName: string;
   getDamageInfo: (skilldamage: number, targetname: string) => void;
   skillDamage: number;
+  skillTarget: string;
 }
 
 export const SkillBar: React.FC<SkillBarProps> = ({
@@ -13,6 +14,7 @@ export const SkillBar: React.FC<SkillBarProps> = ({
   skillName,
   getDamageInfo,
   skillDamage,
+  skillTarget,
 }) => {
   return (
     <>
@@ -23,7 +25,8 @@ export const SkillBar: React.FC<SkillBarProps> = ({
           color="secondary"
           variant="contained"
           onClick={() => {
-            getDamageInfo(skillDamage, "character2"); //character2 is targetname
+            console.log(skillTarget);
+            getDamageInfo(skillDamage / 2, skillTarget); //character2 is targetname
           }}
         >
           {skillName}
