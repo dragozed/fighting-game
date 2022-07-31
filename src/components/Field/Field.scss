@@ -1,11 +1,25 @@
 .character1 {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   position: absolute;
-  bottom: 50%;
+  width: 20%;
+  height: 40%;
+  bottom: 30%;
   left: 25%;
+  background-image: url("https://scitechdaily.com/images/Great-Ape-Gorilla.jpg");
+  background-size: cover;
 }
 
 .character2 {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   position: absolute;
-  bottom: 50%;
-  left: 75%;
+  width: 20%;
+  height: 40%;
+  bottom: 30%;
+  left: 50%;
+  background-image: url("https://upload.wikimedia.org/wikipedia/commons/thumb/9/9d/Komodo_dragon_with_tongue.jpg/1280px-Komodo_dragon_with_tongue.jpg");
+  background-size: cover;
 }

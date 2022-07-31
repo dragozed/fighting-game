@@ -12,11 +12,7 @@ export const Field: React.FC<FieldProps> = () => {
   const [damagedFlag2, setDamagedFlag2] = useState(false);
 
   const getDamageInfo = (skilldamage: number, targetname: string): void => {
-    setDamagedFlag1(false);
-    setDamagedFlag2(false);
-    if (damagedFlag1 === false && damagedFlag2 === false) {
-      checkDamagedCharacter(targetname, characterNames);
-    }
+    checkDamagedCharacter(targetname, characterNames);
   };
 
   const getCharacterName = (charactername: string): void => {
