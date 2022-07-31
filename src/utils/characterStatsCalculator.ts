@@ -1,8 +1,8 @@
 export const characterStatsCalculator = (name: string) => {
-  var healthPoints = 0;
-  var skillCount = 0;
-  var skillName = "none";
-  var skillDamage = 0;
+  let healthPoints = 0;
+  let skillCount = 0;
+  let skillName = "none";
+  let skillDamage = 0;
   if (name === "character1") {
     healthPoints = 1200;
     skillCount = 1;

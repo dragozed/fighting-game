@@ -35,7 +35,6 @@ export const Field: React.FC<FieldProps> = () => {
 
   useEffect(() => {
     //setdamagedflags back to false
-    //triggers twice unlucky
     setDamagedFlag1(false);
     setDamagedFlag2(false);
   }, [damagedFlag1, damagedFlag2]);
