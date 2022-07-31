@@ -43,7 +43,7 @@ export const Character: React.FC<CharacterProps> = ({
   }, []);
 
   useEffect(() => {
-    //if damagedFlag is updated and damagedFlag ==true
+    //if damagedFlag is updated
     if (healthPoints > 0) {
       setHealthPoints(healthPointCalculator(skillDamage, healthPoints));
     }

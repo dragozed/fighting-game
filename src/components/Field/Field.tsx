@@ -14,7 +14,6 @@ export const Field: React.FC<FieldProps> = () => {
   const getDamageInfo = (skilldamage: number, targetname: string): void => {
     setDamagedFlag1(false);
     setDamagedFlag2(false);
-    console.log(damagedFlag1, damagedFlag2);
     if (damagedFlag1 === false && damagedFlag2 === false) {
       checkDamagedCharacter(targetname, characterNames);
     }
@@ -22,7 +21,6 @@ export const Field: React.FC<FieldProps> = () => {
 
   const getCharacterName = (charactername: string): void => {
     characterNames.push(charactername);
-    console.log(characterNames);
   };
 
   function checkDamagedCharacter(
@@ -37,12 +35,14 @@ export const Field: React.FC<FieldProps> = () => {
       setDamagedFlag1(false);
       setDamagedFlag2(false);
     }
-    setTimeout(() => {
-      //can not set these false in a reasonable place
-      setDamagedFlag1(false);
-      setDamagedFlag2(false);
-    }, 100);
   }
+
+  useEffect(() => {
+    //setdamagedflags back to false
+    //triggers twice unlucky
+    setDamagedFlag1(false);
+    setDamagedFlag2(false);
+  }, [damagedFlag1, damagedFlag2]);
 
   return (
     <>

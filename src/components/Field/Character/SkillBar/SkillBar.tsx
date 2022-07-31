@@ -25,7 +25,6 @@ export const SkillBar: React.FC<SkillBarProps> = ({
           color="secondary"
           variant="contained"
           onClick={() => {
-            console.log(skillTarget);
             getDamageInfo(skillDamage / 2, skillTarget); //character2 is targetname
           }}
         >
