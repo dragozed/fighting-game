@@ -11,20 +11,22 @@ export const Home: React.FC = () => {
     <div className="home">
       {!isGameStarted ? (
         <>
-          <Typography sx={{ marginTop: "1rem" }} variant="h4" color="primary">
-            Fighting Game
-          </Typography>
-          <Button //start button
-            size="large"
-            sx={{ margin: "2rem" }}
-            className="startButton"
-            color="primary"
-            variant="contained"
-            disabled={isGameStarted}
-            onClick={() => setIsGameStarted(true)}
-          >
-            Start
-          </Button>
+          <div className="text-button">
+            <Typography sx={{ marginTop: "1rem" }} variant="h4" color="primary">
+              Fighting Game
+            </Typography>
+            <Button //start button
+              size="large"
+              sx={{ margin: "2rem" }}
+              className="startButton"
+              color="primary"
+              variant="contained"
+              disabled={isGameStarted}
+              onClick={() => setIsGameStarted(true)}
+            >
+              Start
+            </Button>
+          </div>
         </>
       ) : (
         <>

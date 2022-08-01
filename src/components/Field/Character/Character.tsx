@@ -3,9 +3,10 @@ import React, { useState, useEffect } from "react";
 import { HealthBar } from "./HealthBar/HealthBar";
 import { SkillBar } from "./SkillBar/SkillBar";
 
-import "./Character.scss";
 import { healthPointCalculator } from "../../../utils/healthPointCalculator";
 import { characterStatsCalculator } from "../../../utils/characterStatsCalculator";
+import { enemiesCalculator } from "../../../utils/enemiesCalculator";
+import "./Character.scss";
 
 interface CharacterProps {
   characterName: string;
@@ -41,10 +42,9 @@ export const Character: React.FC<CharacterProps> = ({
   }, [characterName]);
 
   useEffect(() => {
-    setSkillTarget(
-      characterName === "character1" ? "character2" : "character1"
-    );
-  }, []);
+    //when getDamageInfo changes (skillBar is pressed)
+    setSkillTarget(enemiesCalculator(characterName).enemyName);
+  }, [getDamageInfo]);
 
   useEffect(() => {
     //if damagedFlag is updated and true
