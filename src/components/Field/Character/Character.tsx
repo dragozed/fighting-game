@@ -3,7 +3,9 @@ import React, { useState, useEffect, useContext } from "react";
 import { HealthBar } from "./HealthBar/HealthBar";
 import { SkillBar } from "./SkillBar/SkillBar";
 
-import { CharacterContext } from "../../../contexts/CharacterContext";
+import { CharacterStatusContext } from "../../../contexts/CharacterStatusContext";
+import { CharacterListContext } from "../../../contexts/CharacterListContext";
+
 import { healthPointCalculator } from "../../../utils/healthPointCalculator";
 import { characterStatsCalculator } from "../../../utils/characterStatsCalculator";
 import { targetCalculator } from "../../../utils/targetCalculator";
@@ -37,7 +39,9 @@ export const Character: React.FC<CharacterProps> = ({
   );
   const [skillTarget, setSkillTarget] = useState("");
 
-  const characterStatus = useContext(CharacterContext);
+  const characterStatus = useContext(CharacterStatusContext);
+
+  const characterList = useContext(CharacterListContext);
 
   useEffect(() => {
     //get charactername if it changes
@@ -46,7 +50,9 @@ export const Character: React.FC<CharacterProps> = ({
 
   useEffect(() => {
     //when getDamageInfo changes (skillBar is pressed)
-    setSkillTarget(targetCalculator(characterName, characterStatus).enemyName);
+    setSkillTarget(
+      targetCalculator(characterName, characterStatus, characterList).enemyName
+    );
   }, [getDamageInfo]);
 
   useEffect(() => {
@@ -67,7 +73,6 @@ export const Character: React.FC<CharacterProps> = ({
       setHealthPoints(healthPointCalculator(skillDamage, healthPoints));
       characterStatus[characterStatusIndexSelect()] = "dead";
     }
-    console.log(characterStatus, characterName);
   }, [damagedFlag]);
 
   function characterStatusIndexSelect() {
