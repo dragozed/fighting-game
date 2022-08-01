@@ -13,9 +13,10 @@ import "./Character.scss";
 
 interface CharacterProps {
   characterName: string;
-  getDamageInfo: (skilldamage: number, targetname: string) => void;
-  getCharacterName: (charactername: string) => void;
-  damagedFlag: boolean;
+  getDamageInfo: (skilldamage: number, targetname: string) => void; //goes to field
+  getCharacterName: (charactername: string) => void; //goes to field
+  damagedFlag: boolean; //checks if damaged
+  recievedDamage: number;
 }
 
 export const Character: React.FC<CharacterProps> = ({
@@ -23,6 +24,7 @@ export const Character: React.FC<CharacterProps> = ({
   getDamageInfo,
   getCharacterName,
   damagedFlag,
+  recievedDamage,
 }) => {
   //set character stats according to characterName
   const [skillDamage, setSkillDamage] = useState(
@@ -58,19 +60,19 @@ export const Character: React.FC<CharacterProps> = ({
   useEffect(() => {
     //if damagedFlag is updated and true
     if (
-      healthPointCalculator(skillDamage, healthPoints) > 0 &&
+      healthPointCalculator(recievedDamage, healthPoints) > 0 &&
       damagedFlag == true
     ) {
-      setHealthPoints(healthPointCalculator(skillDamage, healthPoints));
+      setHealthPoints(healthPointCalculator(recievedDamage, healthPoints));
 
       characterStatus[characterStatusIndexSelect()] = "alive";
     } else if (
-      healthPointCalculator(skillDamage, healthPoints) <= 0 &&
+      healthPointCalculator(recievedDamage, healthPoints) <= 0 &&
       characterStatus[characterStatusIndexSelect()] != "dead" &&
       damagedFlag == true
     ) {
       //healthPoints <=0, character is dead
-      setHealthPoints(healthPointCalculator(skillDamage, healthPoints));
+      setHealthPoints(healthPointCalculator(recievedDamage, healthPoints));
       characterStatus[characterStatusIndexSelect()] = "dead";
     }
   }, [damagedFlag]);

@@ -11,8 +11,10 @@ export const Field: React.FC<FieldProps> = () => {
   const [damagedFlag1, setDamagedFlag1] = useState(false);
   const [damagedFlag2, setDamagedFlag2] = useState(false);
   const [damagedFlag3, setDamagedFlag3] = useState(false);
+  const [recievedDamage, setRecievedDamage] = useState(0); //goes to character
 
   const getDamageInfo = (skilldamage: number, targetname: string): void => {
+    setRecievedDamage(skilldamage);
     checkDamagedCharacter(targetname, characterNames);
   };
 
@@ -53,6 +55,7 @@ export const Field: React.FC<FieldProps> = () => {
             getDamageInfo={getDamageInfo}
             getCharacterName={getCharacterName}
             damagedFlag={damagedFlag1}
+            recievedDamage={recievedDamage}
           />
         </div>
         <div className="character2">
@@ -61,6 +64,7 @@ export const Field: React.FC<FieldProps> = () => {
             getDamageInfo={getDamageInfo}
             getCharacterName={getCharacterName}
             damagedFlag={damagedFlag2}
+            recievedDamage={recievedDamage}
           />
         </div>
       </div>
@@ -71,6 +75,7 @@ export const Field: React.FC<FieldProps> = () => {
             getDamageInfo={getDamageInfo}
             getCharacterName={getCharacterName}
             damagedFlag={damagedFlag3}
+            recievedDamage={recievedDamage}
           />
         </div>
       </div>

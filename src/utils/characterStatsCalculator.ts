@@ -6,18 +6,18 @@ export const characterStatsCalculator = (name: string) => {
   if (name === "character1") {
     healthPoints = 120;
     skillCount = 1;
-    skillName = "Attack1";
-    skillDamage = 15;
+    skillName = "Attack1(10)";
+    skillDamage = 10;
   } else if (name === "character2") {
     healthPoints = 100;
     skillCount = 1;
-    skillName = "Attack2";
-    skillDamage = 15;
+    skillName = "Attack2(25)";
+    skillDamage = 25;
   } else if (name === "boss1") {
     healthPoints = 1000;
     skillCount = 1;
-    skillName = "Attack3";
-    skillDamage = 15;
+    skillName = "Attack3(35)";
+    skillDamage = 35;
   }
   return { healthPoints, skillCount, skillName, skillDamage };
 };
