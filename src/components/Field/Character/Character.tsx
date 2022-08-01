@@ -1,11 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 
 import { HealthBar } from "./HealthBar/HealthBar";
 import { SkillBar } from "./SkillBar/SkillBar";
 
+import { CharacterContext } from "../../../contexts/CharacterContext";
 import { healthPointCalculator } from "../../../utils/healthPointCalculator";
 import { characterStatsCalculator } from "../../../utils/characterStatsCalculator";
-import { enemiesCalculator } from "../../../utils/enemiesCalculator";
+import { targetCalculator } from "../../../utils/targetCalculator";
 import "./Character.scss";
 
 interface CharacterProps {
@@ -36,6 +37,8 @@ export const Character: React.FC<CharacterProps> = ({
   );
   const [skillTarget, setSkillTarget] = useState("");
 
+  const characterStatus = useContext(CharacterContext);
+
   useEffect(() => {
     //get charactername if it changes
     getCharacterName(characterName);
@@ -43,15 +46,37 @@ export const Character: React.FC<CharacterProps> = ({
 
   useEffect(() => {
     //when getDamageInfo changes (skillBar is pressed)
-    setSkillTarget(enemiesCalculator(characterName).enemyName);
+    setSkillTarget(targetCalculator(characterName, characterStatus).enemyName);
   }, [getDamageInfo]);
 
   useEffect(() => {
     //if damagedFlag is updated and true
-    if (healthPoints > 0 && damagedFlag == true) {
+    if (
+      healthPointCalculator(skillDamage, healthPoints) > 0 &&
+      damagedFlag == true
+    ) {
       setHealthPoints(healthPointCalculator(skillDamage, healthPoints));
+
+      characterStatus[characterStatusIndexSelect()] = "alive";
+    } else if (
+      healthPointCalculator(skillDamage, healthPoints) <= 0 &&
+      characterStatus[characterStatusIndexSelect()] != "dead" &&
+      damagedFlag == true
+    ) {
+      //healthPoints <=0, character is dead
+      setHealthPoints(healthPointCalculator(skillDamage, healthPoints));
+      characterStatus[characterStatusIndexSelect()] = "dead";
     }
+    console.log(characterStatus, characterName);
   }, [damagedFlag]);
+
+  function characterStatusIndexSelect() {
+    return characterName == "character1"
+      ? 0
+      : characterName == "character2"
+      ? 1
+      : 2;
+  }
 
   return (
     <>

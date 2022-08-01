@@ -38,7 +38,6 @@ export const Field: React.FC<FieldProps> = () => {
   }
 
   useEffect(() => {
-    console.log(characterNames);
     //setdamagedflags back to false
     setDamagedFlag1(false);
     setDamagedFlag2(false);

@@ -1,6 +1,16 @@
-export const enemiesCalculator = (charactername: string) => {
+export const targetCalculator = (
+  charactername: string,
+  characterstatus: string[]
+) => {
   let enemyName: string = "";
   let characterList = ["character1", "character2"];
+
+  //remove dead characters from characterList
+  for (let i = 0; i < characterstatus.length; i++) {
+    if (characterstatus[i] == "dead") {
+      characterList.splice(i);
+    }
+  }
 
   if (charactername === "character1") {
     enemyName = "boss1";
@@ -10,12 +20,5 @@ export const enemiesCalculator = (charactername: string) => {
     enemyName = characterList[Math.floor(Math.random() * characterList.length)];
   }
 
-  /*charactername === "character1"
-        ? "boss1" //character1 skill target name
-        : charactername === "character2"
-        ? "boss1" //character2 skill target name
-        : charactername === "boss1" 
-        ?  //boss1 skill target selector
-        : ""*/
   return { enemyName };
 };
