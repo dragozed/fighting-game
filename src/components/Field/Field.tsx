@@ -64,6 +64,7 @@ export const Field: React.FC<FieldProps> = () => {
             getCharacterName={getCharacterName}
             damagedFlag={damagedFlag1}
             recievedDamage={recievedDamage}
+            bossTurn={bossTurn}
           />
         </div>
         <div className="character2">
@@ -73,6 +74,7 @@ export const Field: React.FC<FieldProps> = () => {
             getCharacterName={getCharacterName}
             damagedFlag={damagedFlag2}
             recievedDamage={recievedDamage}
+            bossTurn={bossTurn}
           />
         </div>
       </div>

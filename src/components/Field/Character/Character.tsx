@@ -17,6 +17,7 @@ interface CharacterProps {
   getCharacterName: (charactername: string) => void; //goes to field
   damagedFlag: boolean; //checks if damaged
   recievedDamage: number;
+  bossTurn: boolean; //checks if boss's turn
 }
 
 export const Character: React.FC<CharacterProps> = ({
@@ -25,6 +26,7 @@ export const Character: React.FC<CharacterProps> = ({
   getCharacterName,
   damagedFlag,
   recievedDamage,
+  bossTurn,
 }) => {
   //set character stats according to characterName
   const [skillDamage, setSkillDamage] = useState(
@@ -58,6 +60,22 @@ export const Character: React.FC<CharacterProps> = ({
       targetCalculator(characterName, characterStatus, characterList).enemyName
     );
   }, [getDamageInfo]);
+  setTimeout(() => {}, 500);
+
+  useEffect(() => {
+    if (
+      //if bossturn and character is not dead and not dead after the attack
+      bossTurn &&
+      characterStatus[characterStatusIndexSelect()] !== "dead" &&
+      healthPointCalculator(recievedDamage, healthPoints) > 0
+    ) {
+      //disable skill bar for some time so its not spammable to create bugs
+      setSkillBarDisabled(true);
+      setTimeout(() => {
+        setSkillBarDisabled(false);
+      }, 200);
+    }
+  }, [bossTurn]);
 
   useEffect(() => {
     //if damagedFlag is updated and true
@@ -81,9 +99,9 @@ export const Character: React.FC<CharacterProps> = ({
   }, [damagedFlag]);
 
   function characterStatusIndexSelect() {
-    return characterName == "character1"
+    return characterName === "character1"
       ? 0
-      : characterName == "character2"
+      : characterName === "character2"
       ? 1
       : 2;
   }
