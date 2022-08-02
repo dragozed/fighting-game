@@ -1,7 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
+import ReactAudioPlayer from "react-audio-player";
 
 import { Character } from "./Character/Character";
 import { Boss } from "./Boss/Boss";
+import { Minion } from "./Minion/Minion";
+
+import { StageStatusContext } from "../../contexts/StageStatusContext";
 
 import "./Field.scss";
 
@@ -14,6 +18,7 @@ export const Field: React.FC<FieldProps> = () => {
   const [damagedFlag3, setDamagedFlag3] = useState(false);
   const [recievedDamage, setRecievedDamage] = useState(0); //goes to character
   const [bossTurn, setBossTurn] = useState(false);
+  const stageStatus = useContext(StageStatusContext);
 
   const getCharacterName = (charactername: string): void => {
     characterNames.push(charactername);
@@ -48,7 +53,7 @@ export const Field: React.FC<FieldProps> = () => {
       setDamagedFlag2(false);
       setBossTurn(false);
     }
-    if (damagedFlag3) {
+    if (damagedFlag3 && stageStatus) {
       setDamagedFlag3(false);
       setBossTurn(true);
     }
@@ -68,7 +73,7 @@ export const Field: React.FC<FieldProps> = () => {
           />
         </div>
         <div className="character2">
-          <Character
+          <Minion
             characterName={"character2"}
             getDamageInfo={getDamageInfo}
             getCharacterName={getCharacterName}
@@ -90,6 +95,19 @@ export const Field: React.FC<FieldProps> = () => {
           />
         </div>
       </div>
+      {stageStatus[0] === "allieswin" ? (
+        <ReactAudioPlayer
+          src="https://static.wikia.nocookie.net/dota2_gamepedia/images/1/1c/Misc_soundboard_easiest_money.mp3"
+          autoPlay
+        />
+      ) : stageStatus[0] === "enemieswin" ? (
+        <ReactAudioPlayer
+          src="https://static.wikia.nocookie.net/dota2_gamepedia/images/c/c4/Misc_soundboard_sad_bone.mp3"
+          autoPlay
+        />
+      ) : (
+        ""
+      )}
     </>
   );
 };

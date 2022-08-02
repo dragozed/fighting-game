@@ -5,14 +5,13 @@ import { SkillBar } from "./SkillBar/SkillBar";
 
 import { CharacterStatusContext } from "../../../contexts/CharacterStatusContext";
 import { CharacterListContext } from "../../../contexts/CharacterListContext";
-import { StageStatusContext } from "../../../contexts/StageStatusContext";
 
 import { healthPointCalculator } from "../../../utils/healthPointCalculator";
 import { characterStatsCalculator } from "../../../utils/characterStatsCalculator";
 import { targetCalculator } from "../../../utils/targetCalculator";
-import "./Character.scss";
+import "./Minion.scss";
 
-interface CharacterProps {
+interface MinionProps {
   characterName: string;
   getDamageInfo: (skilldamage: number, targetname: string) => void; //goes to field
   getCharacterName: (charactername: string) => void; //goes to field
@@ -21,7 +20,7 @@ interface CharacterProps {
   bossTurn: boolean; //checks if boss's turn
 }
 
-export const Character: React.FC<CharacterProps> = ({
+export const Minion: React.FC<MinionProps> = ({
   characterName,
   getDamageInfo,
   getCharacterName,
@@ -48,8 +47,6 @@ export const Character: React.FC<CharacterProps> = ({
 
   const characterList = useContext(CharacterListContext);
 
-  const stageStatus = useContext(StageStatusContext);
-
   const [skillBarDisabled, setSkillBarDisabled] = useState(false);
 
   useEffect(() => {
@@ -66,19 +63,11 @@ export const Character: React.FC<CharacterProps> = ({
   setTimeout(() => {}, 500);
 
   useEffect(() => {
-    if (stageStatus[0] !== "ongoing") {
-      setSkillBarDisabled(true);
-    }
-  }, [stageStatus[0]]);
-
-  useEffect(() => {
-    //used against skillBar spams leading to bugs
     if (
       //if bossturn and character is not dead and not dead after the attack
       bossTurn &&
       characterStatus[characterStatusIndexSelect()] !== "dead" &&
-      healthPointCalculator(recievedDamage, healthPoints) > 0 &&
-      stageStatus[0] === "ongoing"
+      healthPointCalculator(recievedDamage, healthPoints) > 0
     ) {
       //disable skill bar for some time so its not spammable to create bugs
       setSkillBarDisabled(true);
@@ -106,7 +95,6 @@ export const Character: React.FC<CharacterProps> = ({
       setHealthPoints(healthPointCalculator(recievedDamage, healthPoints));
       characterStatus[characterStatusIndexSelect()] = "dead";
       setSkillBarDisabled(true);
-      stageStatus[0] = "enemieswin";
     }
   }, [damagedFlag]);
 

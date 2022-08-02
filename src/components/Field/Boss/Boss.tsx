@@ -4,6 +4,7 @@ import { HealthBar } from "./HealthBar/HealthBar";
 
 import { CharacterStatusContext } from "../../../contexts/CharacterStatusContext";
 import { CharacterListContext } from "../../../contexts/CharacterListContext";
+import { StageStatusContext } from "../../../contexts/StageStatusContext";
 
 import { healthPointCalculator } from "../../../utils/healthPointCalculator";
 import { characterStatsCalculator } from "../../../utils/characterStatsCalculator";
@@ -46,6 +47,8 @@ export const Boss: React.FC<BossProps> = ({
 
   const characterList = useContext(CharacterListContext);
 
+  const stageStatus = useContext(StageStatusContext);
+
   useEffect(() => {
     //get charactername if it changes
     getCharacterName(characterName);
@@ -53,7 +56,7 @@ export const Boss: React.FC<BossProps> = ({
 
   useEffect(() => {
     //when its bossTurn
-    if (bossTurn) {
+    if (bossTurn && stageStatus[0] === "ongoing") {
       getDamageInfo(skillDamage, skillTarget);
     }
   }, [bossTurn]);
@@ -69,26 +72,27 @@ export const Boss: React.FC<BossProps> = ({
     //if damagedFlag is updated and true
     if (
       healthPointCalculator(recievedDamage, healthPoints) > 0 &&
-      damagedFlag == true
+      damagedFlag === true
     ) {
       setHealthPoints(healthPointCalculator(recievedDamage, healthPoints));
 
       characterStatus[characterStatusIndexSelect()] = "alive";
     } else if (
       healthPointCalculator(recievedDamage, healthPoints) <= 0 &&
-      characterStatus[characterStatusIndexSelect()] != "dead" &&
-      damagedFlag == true
+      characterStatus[characterStatusIndexSelect()] !== "dead" &&
+      damagedFlag === true
     ) {
       //healthPoints <=0, character is dead
       setHealthPoints(healthPointCalculator(recievedDamage, healthPoints));
       characterStatus[characterStatusIndexSelect()] = "dead";
+      stageStatus[0] = "allieswin";
     }
   }, [damagedFlag]);
 
   function characterStatusIndexSelect() {
-    return characterName == "character1"
+    return characterName === "character1"
       ? 0
-      : characterName == "character2"
+      : characterName === "character2"
       ? 1
       : 2;
   }
