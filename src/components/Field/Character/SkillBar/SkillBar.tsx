@@ -7,6 +7,7 @@ interface SkillBarProps {
   getDamageInfo: (skilldamage: number, targetname: string) => void;
   skillDamage: number;
   skillTarget: string;
+  disabled: boolean;
 }
 
 export const SkillBar: React.FC<SkillBarProps> = ({
@@ -15,11 +16,13 @@ export const SkillBar: React.FC<SkillBarProps> = ({
   getDamageInfo,
   skillDamage,
   skillTarget,
+  disabled,
 }) => {
   return (
     <>
       <Typography variant="h5" color="primary" align="center">
         <Button
+          disabled={disabled}
           size="large"
           className="backButton"
           color="secondary"

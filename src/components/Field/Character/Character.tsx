@@ -45,6 +45,8 @@ export const Character: React.FC<CharacterProps> = ({
 
   const characterList = useContext(CharacterListContext);
 
+  const [skillBarDisabled, setSkillBarDisabled] = useState(false);
+
   useEffect(() => {
     //get charactername if it changes
     getCharacterName(characterName);
@@ -74,6 +76,7 @@ export const Character: React.FC<CharacterProps> = ({
       //healthPoints <=0, character is dead
       setHealthPoints(healthPointCalculator(recievedDamage, healthPoints));
       characterStatus[characterStatusIndexSelect()] = "dead";
+      setSkillBarDisabled(true);
     }
   }, [damagedFlag]);
 
@@ -89,6 +92,7 @@ export const Character: React.FC<CharacterProps> = ({
     <>
       <HealthBar healthPoints={healthPoints} />
       <SkillBar
+        disabled={skillBarDisabled}
         skillCount={skillCount}
         skillName={skillName}
         getDamageInfo={getDamageInfo}
