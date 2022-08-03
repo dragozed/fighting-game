@@ -17,7 +17,12 @@ export const Home: React.FC = () => {
       {!isGameStarted ? (
         <>
           <div className="text-button">
-            <Typography sx={{ marginTop: "1rem" }} variant="h4" color="primary">
+            <Typography
+              sx={{ marginTop: "1rem" }}
+              variant="h4"
+              color="primary"
+              textAlign="center"
+            >
               Fighting Game
             </Typography>
             <Button //start button
