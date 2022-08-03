@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import ReactAudioPlayer from "react-audio-player";
+import Modal from "react-modal";
 
 import { Character } from "./Character/Character";
 import { Boss } from "./Boss/Boss";
@@ -9,9 +10,13 @@ import { StageStatusContext } from "../../contexts/StageStatusContext";
 
 import "./Field.scss";
 
-interface FieldProps {}
+Modal.setAppElement("#root"); //to prevent assistive technologies such as screenreaders from reading content outside of the content of your modal
 
-export const Field: React.FC<FieldProps> = () => {
+interface FieldProps {
+  getIsGameStarted: (isgamestarted: boolean) => void;
+}
+
+export const Field: React.FC<FieldProps> = ({ getIsGameStarted }) => {
   const [characterNames, setCharacterNames] = useState([""]);
   const [damagedFlag1, setDamagedFlag1] = useState(false);
   const [damagedFlag2, setDamagedFlag2] = useState(false);
@@ -19,6 +24,7 @@ export const Field: React.FC<FieldProps> = () => {
   const [recievedDamage, setRecievedDamage] = useState(0); //goes to character
   const [bossTurn, setBossTurn] = useState(false);
   const stageStatus = useContext(StageStatusContext);
+  const [modalIsOpen, setModalIsOpen] = useState(false);
 
   const getCharacterName = (charactername: string): void => {
     characterNames.push(charactername);
@@ -59,6 +65,13 @@ export const Field: React.FC<FieldProps> = () => {
     }
   }, [damagedFlag1, damagedFlag2, damagedFlag3]);
 
+  useEffect(() => {
+    //open modal if some side wins
+    if (stageStatus[0] === "allieswin" || stageStatus[0] === "enemieswin") {
+      setModalIsOpen(true);
+    }
+  }, [stageStatus[0]]);
+
   return (
     <>
       <div className="allies">
@@ -95,6 +108,36 @@ export const Field: React.FC<FieldProps> = () => {
           />
         </div>
       </div>
+
+      <Modal
+        isOpen={modalIsOpen}
+        onRequestClose={() => setModalIsOpen(false)}
+        style={{
+          overlay: {
+            backgroundColor: "grey",
+          },
+          content: {
+            color: "orange",
+          },
+        }}
+      >
+        <h1>{stageStatus[0] === "allieswin" ? "You Won!" : "YOU DIED"}</h1>
+        <h3>
+          {stageStatus[0] === "allieswin"
+            ? "That was the last stage, game is over. Back to lobby."
+            : "Back to lobby"}
+        </h3>
+        <button
+          onClick={() => {
+            setModalIsOpen(false);
+            getIsGameStarted(false);
+            stageStatus[0] = "ongoing";
+          }}
+        >
+          Close
+        </button>
+      </Modal>
+
       {stageStatus[0] === "allieswin" ? (
         <ReactAudioPlayer
           src="https://static.wikia.nocookie.net/dota2_gamepedia/images/1/1c/Misc_soundboard_easiest_money.mp3"

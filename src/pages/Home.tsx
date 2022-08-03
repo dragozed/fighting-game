@@ -1,11 +1,16 @@
 import React, { useState } from "react";
+import { Button, Typography } from "@mui/material";
+
+import { Field } from "../components/Field/Field";
 
 import "./Home.scss";
-import { Button, Typography } from "@mui/material";
-import { Field } from "../components/Field/Field";
 
 export const Home: React.FC = () => {
   const [isGameStarted, setIsGameStarted] = useState(false);
+
+  const getIsGameStarted = (isgamestarted: boolean): void => {
+    setIsGameStarted(isgamestarted);
+  };
 
   return (
     <div className="home">
@@ -42,7 +47,7 @@ export const Home: React.FC = () => {
           >
             Back
           </Button>
-          <Field />
+          <Field getIsGameStarted={getIsGameStarted} />
         </>
       )}
     </div>
