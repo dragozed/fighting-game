@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import ReactAudioPlayer from "react-audio-player";
 import Modal from "react-modal";
+import { Button, Typography } from "@mui/material";
 
 import { Character } from "./Character/Character";
 import { Boss } from "./Boss/Boss";
@@ -9,6 +10,7 @@ import { Minion } from "./Minion/Minion";
 import { StageStatusContext } from "../../contexts/StageStatusContext";
 
 import "./Field.scss";
+import { flexbox } from "@mui/system";
 
 Modal.setAppElement("#root"); //to prevent assistive technologies such as screenreaders from reading content outside of the content of your modal
 
@@ -117,17 +119,27 @@ export const Field: React.FC<FieldProps> = ({ getIsGameStarted }) => {
             backgroundColor: "grey",
           },
           content: {
+            display: "flex",
             color: "orange",
+            flexDirection: "column",
+            alignItems: "center",
           },
         }}
       >
-        <h1>{stageStatus[0] === "allieswin" ? "You Won!" : "YOU DIED"}</h1>
-        <h3>
+        <Typography variant="h3">
+          {stageStatus[0] === "allieswin" ? "You Won!" : "YOU DIED"}
+        </Typography>
+        <Typography variant="h5">
           {stageStatus[0] === "allieswin"
             ? "That was the last stage, game is over. Back to lobby."
             : "Back to lobby"}
-        </h3>
-        <button
+        </Typography>
+        <Button
+          size="large"
+          className="modalButton"
+          sx={{ top: "1rem", left: "1rem" }}
+          color="secondary"
+          variant="contained"
           onClick={() => {
             setModalIsOpen(false);
             getIsGameStarted(false);
@@ -135,12 +147,12 @@ export const Field: React.FC<FieldProps> = ({ getIsGameStarted }) => {
           }}
         >
           Close
-        </button>
+        </Button>
       </Modal>
 
       {stageStatus[0] === "allieswin" ? (
         <ReactAudioPlayer
-          src="https://static.wikia.nocookie.net/dota2_gamepedia/images/1/1c/Misc_soundboard_easiest_money.mp3"
+          src="https://cdn.pixabay.com/audio/2021/08/04/audio_12b0c7443c.mp3?filename=success-fanfare-trumpets-6185.mp3"
           autoPlay
         />
       ) : stageStatus[0] === "enemieswin" ? (
