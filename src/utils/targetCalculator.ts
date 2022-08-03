@@ -13,12 +13,13 @@ export const targetCalculator = (
 
   if (charactername === "character1") {
     enemyName = "boss1";
-  } else if (charactername === "character2") {
+  } else if (charactername === "minion1") {
     enemyName = "boss1";
   } else if (charactername === "boss1") {
     characterlist = characterlist.filter((item) => item.length > 1); //filter character list, dump empty strings
     enemyName = characterlist[Math.floor(Math.random() * characterlist.length)];
   }
+
 
   return { enemyName };
 };

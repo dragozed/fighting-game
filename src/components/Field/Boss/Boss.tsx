@@ -7,12 +7,13 @@ import { CharacterListContext } from "../../../contexts/CharacterListContext";
 import { StageStatusContext } from "../../../contexts/StageStatusContext";
 
 import { healthPointCalculator } from "../../../utils/healthPointCalculator";
-import { characterStatsCalculator } from "../../../utils/characterStatsCalculator";
+import { bossStatsCalculator } from "./utils/bossStatsCalculator";
 import { targetCalculator } from "../../../utils/targetCalculator";
+import { bossNameCalculator } from "./utils/bossNameCalculator";
 import "./Boss.scss";
 
 interface BossProps {
-  characterName: string;
+  stageName: string;
   getDamageInfo: (skilldamage: number, targetname: string) => void; //goes to field
   getCharacterName: (charactername: string) => void; //goes to field
   damagedFlag: boolean; //checks if damaged
@@ -21,25 +22,26 @@ interface BossProps {
 }
 
 export const Boss: React.FC<BossProps> = ({
-  characterName,
+  stageName,
   getDamageInfo,
   getCharacterName,
   damagedFlag,
   recievedDamage,
   bossTurn,
 }) => {
+  const [bossName, setBossName] = useState(bossNameCalculator(stageName));
   //set character stats according to characterName
   const [skillDamage, setSkillDamage] = useState(
-    characterStatsCalculator(characterName).skillDamage
+    bossStatsCalculator(bossName).skillDamage
   );
   const [healthPoints, setHealthPoints] = useState(
-    characterStatsCalculator(characterName).healthPoints
+    bossStatsCalculator(bossName).healthPoints
   );
   const [skillCount, setSkillCount] = useState(
-    characterStatsCalculator(characterName).skillCount
+    bossStatsCalculator(bossName).skillCount
   );
   const [skillName, setSkillName] = useState(
-    characterStatsCalculator(characterName).skillName
+    bossStatsCalculator(bossName).skillName
   );
   const [skillTarget, setSkillTarget] = useState("");
 
@@ -51,8 +53,13 @@ export const Boss: React.FC<BossProps> = ({
 
   useEffect(() => {
     //get charactername if it changes
-    getCharacterName(characterName);
-  }, [characterName]);
+    getCharacterName(bossName);
+  }, []);
+
+  useEffect(() => {
+    //get charactername if it changes
+    getCharacterName(bossName);
+  }, [bossName]);
 
   useEffect(() => {
     //when its bossTurn
@@ -64,7 +71,7 @@ export const Boss: React.FC<BossProps> = ({
   useEffect(() => {
     //when getDamageInfo changes
     setSkillTarget(
-      targetCalculator(characterName, characterStatus, characterList).enemyName
+      targetCalculator(bossName, characterStatus, characterList).enemyName
     );
   }, [getDamageInfo]);
 
@@ -90,11 +97,7 @@ export const Boss: React.FC<BossProps> = ({
   }, [damagedFlag]);
 
   function characterStatusIndexSelect() {
-    return characterName === "character1"
-      ? 0
-      : characterName === "character2"
-      ? 1
-      : 2;
+    return bossName === "character1" ? 0 : bossName === "minion1" ? 1 : 2;
   }
 
   return (

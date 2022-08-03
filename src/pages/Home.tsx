@@ -42,7 +42,7 @@ export const Home: React.FC = () => {
                 {
                   //i am not sure why i should do it like that but other methods dont work
                   characterList[0] = "character1";
-                  characterList[1] = "character2";
+                  characterList[1] = "minion1";
                   characterStatus[0] = "alive";
                   characterStatus[1] = "alive";
                   characterStatus[2] = "alive";

@@ -7,7 +7,7 @@ import { CharacterStatusContext } from "../../../contexts/CharacterStatusContext
 import { CharacterListContext } from "../../../contexts/CharacterListContext";
 
 import { healthPointCalculator } from "../../../utils/healthPointCalculator";
-import { characterStatsCalculator } from "../../../utils/characterStatsCalculator";
+import { minionStatsCalculator } from "./utils/minionStatsCalculator";
 import { targetCalculator } from "../../../utils/targetCalculator";
 import "./Minion.scss";
 
@@ -30,16 +30,16 @@ export const Minion: React.FC<MinionProps> = ({
 }) => {
   //set character stats according to characterName
   const [skillDamage, setSkillDamage] = useState(
-    characterStatsCalculator(characterName).skillDamage
+    minionStatsCalculator(characterName).skillDamage
   );
   const [healthPoints, setHealthPoints] = useState(
-    characterStatsCalculator(characterName).healthPoints
+    minionStatsCalculator(characterName).healthPoints
   );
   const [skillCount, setSkillCount] = useState(
-    characterStatsCalculator(characterName).skillCount
+    minionStatsCalculator(characterName).skillCount
   );
   const [skillName, setSkillName] = useState(
-    characterStatsCalculator(characterName).skillName
+    minionStatsCalculator(characterName).skillName
   );
   const [skillTarget, setSkillTarget] = useState("");
 
@@ -101,7 +101,7 @@ export const Minion: React.FC<MinionProps> = ({
   function characterStatusIndexSelect() {
     return characterName === "character1"
       ? 0
-      : characterName === "character2"
+      : characterName === "minion1"
       ? 1
       : 2;
   }

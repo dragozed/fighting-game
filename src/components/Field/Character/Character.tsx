@@ -8,7 +8,7 @@ import { CharacterListContext } from "../../../contexts/CharacterListContext";
 import { StageStatusContext } from "../../../contexts/StageStatusContext";
 
 import { healthPointCalculator } from "../../../utils/healthPointCalculator";
-import { characterStatsCalculator } from "../../../utils/characterStatsCalculator";
+import { characterStatsCalculator } from "./utils/characterStatsCalculator";
 import { targetCalculator } from "../../../utils/targetCalculator";
 import "./Character.scss";
 
@@ -82,7 +82,6 @@ export const Character: React.FC<CharacterProps> = ({
         setSkillBarDisabled(false);
       }, 200);
     }
-    console.log(characterStatus);
   }, [bossTurn]);
 
   useEffect(() => {
@@ -110,7 +109,7 @@ export const Character: React.FC<CharacterProps> = ({
   function characterStatusIndexSelect() {
     return characterName === "character1"
       ? 0
-      : characterName === "character2"
+      : characterName === "minion1"
       ? 1
       : 2;
   }

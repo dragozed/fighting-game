@@ -84,7 +84,7 @@ export const Field: React.FC<FieldProps> = ({ getIsGameStarted }) => {
         </div>
         <div className="character2">
           <Minion
-            characterName={"character2"}
+            characterName={"minion1"}
             getDamageInfo={getDamageInfo}
             getCharacterName={getCharacterName}
             damagedFlag={damagedFlag2}
@@ -96,7 +96,7 @@ export const Field: React.FC<FieldProps> = ({ getIsGameStarted }) => {
       <div className="enemies">
         <div className="boss">
           <Boss
-            characterName={"boss1"}
+            stageName={"stage1"}
             getDamageInfo={getDamageInfo}
             getCharacterName={getCharacterName}
             damagedFlag={damagedFlag3}

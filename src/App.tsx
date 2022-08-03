@@ -13,7 +13,7 @@ import "./App.css";
 function App() {
   return (
     <CharacterStatusContext.Provider value={["alive", "alive", "alive"]}>
-      <CharacterListContext.Provider value={["character1", "character2"]}>
+      <CharacterListContext.Provider value={["character1", "minion1"]}>
         <StageStatusContext.Provider value={["ongoing"]}>
           <div className="App">
             <ThemeProvider theme={theme}>
