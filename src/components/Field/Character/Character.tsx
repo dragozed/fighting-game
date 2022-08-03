@@ -43,13 +43,9 @@ export const Character: React.FC<CharacterProps> = ({
     characterStatsCalculator(characterName).skillName
   );
   const [skillTarget, setSkillTarget] = useState("");
-
   const characterStatus = useContext(CharacterStatusContext);
-
   const characterList = useContext(CharacterListContext);
-
   const stageStatus = useContext(StageStatusContext);
-
   const [skillBarDisabled, setSkillBarDisabled] = useState(false);
 
   useEffect(() => {
@@ -86,6 +82,7 @@ export const Character: React.FC<CharacterProps> = ({
         setSkillBarDisabled(false);
       }, 200);
     }
+    console.log(characterStatus);
   }, [bossTurn]);
 
   useEffect(() => {
