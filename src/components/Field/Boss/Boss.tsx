@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
+import { Typography } from "@mui/material";
 
 import { HealthBar } from "./HealthBar/HealthBar";
 
@@ -43,6 +44,12 @@ export const Boss: React.FC<BossProps> = ({
   const [skillName, setSkillName] = useState(
     bossStatsCalculator(bossName).skillName
   );
+  const [bossVisualName, setBossVisualName] = useState(
+    bossStatsCalculator(bossName).bossVisualName
+  );
+  const [bossImageAddress, setBossImageAddress] = useState(
+    bossStatsCalculator(bossName).bossImageAddress
+  );
   const [skillTarget, setSkillTarget] = useState("");
   const characterStatus = useContext(CharacterStatusContext);
   const characterList = useContext(CharacterListContext);
@@ -60,6 +67,8 @@ export const Boss: React.FC<BossProps> = ({
     setHealthPoints(bossStatsCalculator(bossName).healthPoints);
     setSkillCount(bossStatsCalculator(bossName).skillCount);
     setSkillName(bossStatsCalculator(bossName).skillName);
+    setBossVisualName(bossStatsCalculator(bossName).bossVisualName);
+    setBossImageAddress(bossStatsCalculator(bossName).bossImageAddress);
   }, [stageNo, bossName]);
 
   useEffect(() => {
@@ -128,7 +137,16 @@ export const Boss: React.FC<BossProps> = ({
 
   return (
     <>
-      <HealthBar healthPoints={healthPoints} bossName={bossName} />
+      <div className="boss-content">
+        <div className="boss-topbar">
+          <HealthBar
+            healthPoints={healthPoints}
+            bossName={bossName}
+            bossVisualName={bossVisualName}
+          />
+        </div>
+        <img className="boss" src={bossImageAddress}></img>
+      </div>
     </>
   );
 };

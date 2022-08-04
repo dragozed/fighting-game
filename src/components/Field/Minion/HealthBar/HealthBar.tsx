@@ -4,9 +4,13 @@ import "./HealthBar.scss";
 
 interface HealthBarProps {
   healthPoints: number;
+  characterVisualName: string;
 }
 
-export const HealthBar: React.FC<HealthBarProps> = ({ healthPoints }) => {
+export const HealthBar: React.FC<HealthBarProps> = ({
+  healthPoints,
+  characterVisualName,
+}) => {
   const [maxHealthPoints, setMaxHealthPoints] = useState(healthPoints);
   const [healthPercentage, setHealthPercentage] = useState(100 + "%");
 
@@ -26,12 +30,13 @@ export const HealthBar: React.FC<HealthBarProps> = ({ healthPoints }) => {
   });
   return (
     <>
-      <div>
-        <div style={styleHealthBar(healthPercentage)}>
-          <Typography variant="h5" color="primary" align="center">
-            {healthPoints}
-          </Typography>
-        </div>
+      <Typography variant="h5" color="primary" align="center">
+        {characterVisualName}
+      </Typography>
+      <div style={styleHealthBar(healthPercentage)}>
+        <Typography variant="h5" color="primary" align="center">
+          {healthPoints}
+        </Typography>
       </div>
     </>
   );

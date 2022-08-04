@@ -1,6 +1,6 @@
 export const targetCalculator = (
   charactername: string,
-  characterstatus: { character1: string; minion1: string; boss: string }, //{ character1: string; minion1: string; boss: string; }
+  characterstatus: { character1: string; minion1: string; boss: string },
   characterlist: string[],
   stageStatus: number
 ) => {

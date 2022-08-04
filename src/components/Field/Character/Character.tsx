@@ -42,6 +42,9 @@ export const Character: React.FC<CharacterProps> = ({
   const [skillName, setSkillName] = useState(
     characterStatsCalculator(characterName).skillName
   );
+  const [characterVisualName, setCharacterVisualName] = useState(
+    characterStatsCalculator(characterName).characterVisualName
+  );
   const [skillTarget, setSkillTarget] = useState("");
   const characterStatus = useContext(CharacterStatusContext);
   const characterList = useContext(CharacterListContext);
@@ -132,15 +135,28 @@ export const Character: React.FC<CharacterProps> = ({
 
   return (
     <>
-      <HealthBar healthPoints={healthPoints} />
-      <SkillBar
-        disabled={skillBarDisabled}
-        skillCount={skillCount}
-        skillName={skillName}
-        getDamageInfo={getDamageInfo}
-        skillDamage={skillDamage}
-        skillTarget={skillTarget}
-      />
+      <div className="character1-content">
+        <div className="character1-topbar">
+          <HealthBar
+            healthPoints={healthPoints}
+            characterVisualName={characterVisualName}
+          />
+        </div>
+        <img
+          className="character1"
+          src="https://scitechdaily.com/images/Great-Ape-Gorilla.jpg"
+        ></img>
+        <div className="character1-bottombar">
+          <SkillBar
+            disabled={skillBarDisabled}
+            skillCount={skillCount}
+            skillName={skillName}
+            getDamageInfo={getDamageInfo}
+            skillDamage={skillDamage}
+            skillTarget={skillTarget}
+          />
+        </div>
+      </div>
     </>
   );
 };

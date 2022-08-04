@@ -1,35 +1,14 @@
+.character1-content {
+  margin: 1%;
+  height: 40%;
+  width: 70%;
+}
+
 .character1 {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  width: 70%;
-  height: 40%;
-  background-image: url("https://scitechdaily.com/images/Great-Ape-Gorilla.jpg");
-  background-size: cover;
-  background-position: center center;
-  margin: 1%;
+  width: 100%;
 }
-
-.character2 {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  width: 70%;
-  height: 40%;
-  background-image: url("https://upload.wikimedia.org/wikipedia/commons/thumb/9/9d/Komodo_dragon_with_tongue.jpg/1280px-Komodo_dragon_with_tongue.jpg");
-  background-size: cover;
-  background-position: center center;
-  margin: 1%;
+.character1-topbar {
+  width: 100%;
 }
-
-//.boss will be deleted
-.boss {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  width: 70%;
-  height: 40%;
-  background-image: url("https://upload.wikimedia.org/wikipedia/commons/b/be/Bicho-pregui%C3%A7a_3.jpg");
-  background-size: cover;
-  background-position: center center;
+.character1-bottombar {
 }

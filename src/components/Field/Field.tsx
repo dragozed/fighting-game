@@ -85,29 +85,24 @@ export const Field: React.FC<FieldProps> = ({ getIsGameStarted }) => {
   return (
     <>
       <div className="allies">
-        <div className="character1">
-          <Character
-            characterName={"character1"}
-            getDamageInfo={getDamageInfo}
-            getCharacterName={getCharacterName}
-            damagedFlag={damagedFlag1}
-            recievedDamage={recievedDamage}
-            bossTurn={bossTurn}
-          />
-        </div>
-        <div className="character2">
-          <Minion
-            characterName={"minion1"}
-            getDamageInfo={getDamageInfo}
-            getCharacterName={getCharacterName}
-            damagedFlag={damagedFlag2}
-            recievedDamage={recievedDamage}
-            bossTurn={bossTurn}
-          />
-        </div>
+        <Character
+          characterName={"character1"}
+          getDamageInfo={getDamageInfo}
+          getCharacterName={getCharacterName}
+          damagedFlag={damagedFlag1}
+          recievedDamage={recievedDamage}
+          bossTurn={bossTurn}
+        />
+        <Minion
+          characterName={"minion1"}
+          getDamageInfo={getDamageInfo}
+          getCharacterName={getCharacterName}
+          damagedFlag={damagedFlag2}
+          recievedDamage={recievedDamage}
+          bossTurn={bossTurn}
+        />
       </div>
       <div className="enemies">
-        <div className={"boss" + stageStatus.stagenumber}>
           <Boss
             stageNo={stageStatus.stagenumber}
             getDamageInfo={getDamageInfo}
@@ -116,7 +111,6 @@ export const Field: React.FC<FieldProps> = ({ getIsGameStarted }) => {
             recievedDamage={recievedDamage}
             bossTurn={bossTurn}
           />
-        </div>
       </div>
       <EndStageModal
         modalIsOpen={modalIsOpen}

@@ -42,6 +42,9 @@ export const Minion: React.FC<MinionProps> = ({
   const [skillName, setSkillName] = useState(
     minionStatsCalculator(characterName).skillName
   );
+  const [characterVisualName, setCharacterVisualName] = useState(
+    minionStatsCalculator(characterName).characterVisualName
+  );
   const [skillTarget, setSkillTarget] = useState("");
   const characterStatus = useContext(CharacterStatusContext);
   const characterList = useContext(CharacterListContext);
@@ -109,15 +112,28 @@ export const Minion: React.FC<MinionProps> = ({
 
   return (
     <>
-      <HealthBar healthPoints={healthPoints} />
-      <SkillBar
-        disabled={skillBarDisabled}
-        skillCount={skillCount}
-        skillName={skillName}
-        getDamageInfo={getDamageInfo}
-        skillDamage={skillDamage}
-        skillTarget={skillTarget}
-      />
+      <div className="minion1-content">
+        <div className="minion1-topbar">
+          <HealthBar
+            healthPoints={healthPoints}
+            characterVisualName={characterVisualName}
+          />
+        </div>
+        <img
+          className="minion1"
+          src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9d/Komodo_dragon_with_tongue.jpg/1280px-Komodo_dragon_with_tongue.jpg"
+        ></img>
+        <div className="minion1-bottombar">
+          <SkillBar
+            disabled={skillBarDisabled}
+            skillCount={skillCount}
+            skillName={skillName}
+            getDamageInfo={getDamageInfo}
+            skillDamage={skillDamage}
+            skillTarget={skillTarget}
+          />
+        </div>
+      </div>
     </>
   );
 };

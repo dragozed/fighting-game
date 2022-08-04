@@ -1,21 +1,13 @@
-.boss1 {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  width: 70%;
-  height: 40%;
-  background-image: url("https://upload.wikimedia.org/wikipedia/commons/b/be/Bicho-pregui%C3%A7a_3.jpg");
-  background-size: cover;
-  background-position: center center;
+.boss {
+  width: 100%;
 }
 
-.boss2 {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  width: 70%;
+.boss-content {
+  margin: 1%;
   height: 40%;
-  background-image: url("https://upload.wikimedia.org/wikipedia/commons/thumb/7/7a/Blue_and_yellow_Macaw.jpg/1920px-Blue_and_yellow_Macaw.jpg");
-  background-size: cover;
-  background-position: center center;
+  width: 70%;
+}
+
+.boss-topbar {
+  width: 100%;
 }
