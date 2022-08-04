@@ -50,7 +50,6 @@ export const Field: React.FC<FieldProps> = ({ getIsGameStarted }) => {
       setDamagedFlag2(false);
       setDamagedFlag3(false);
     }
-    console.log(characternames);
   }
 
   useEffect(() => {
@@ -105,7 +104,7 @@ export const Field: React.FC<FieldProps> = ({ getIsGameStarted }) => {
         </div>
       </div>
       <div className="enemies">
-        <div className="boss">
+        <div className={"boss" + stageStatus[1]}>
           <Boss
             stageNo={stageStatus[1]}
             getDamageInfo={getDamageInfo}
