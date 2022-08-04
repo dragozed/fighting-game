@@ -54,7 +54,7 @@ export const EndStageModal: React.FC<EndStageModalProps> = ({
           size="large"
           className="modalButton"
           sx={{ top: "1rem" }}
-          color="secondary"
+          color="primary"
           variant="contained"
           onClick={() => {
             setModalIsOpen(false);
