@@ -117,7 +117,6 @@ export const Boss: React.FC<BossProps> = ({
       characterStatus.boss = "dead";
       stageStatus.stagestatus = "allieswin";
     }
-    console.log(healthPoints);
   }, [
     damagedFlag,
     characterStatus,
@@ -128,7 +127,7 @@ export const Boss: React.FC<BossProps> = ({
 
   return (
     <>
-      <HealthBar healthPoints={healthPoints} />
+      <HealthBar healthPoints={healthPoints} bossName={bossName} />
     </>
   );
 };

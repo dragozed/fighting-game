@@ -1,26 +1,29 @@
 import React, { useEffect, useState } from "react";
 import { Typography } from "@mui/material";
+
+import { bossStatsCalculator } from "../utils/bossStatsCalculator";
+
 import "./HealthBar.scss";
 
 interface HealthBarProps {
   healthPoints: number;
+  bossName: string;
 }
 
-export const HealthBar: React.FC<HealthBarProps> = ({ healthPoints }) => {
+export const HealthBar: React.FC<HealthBarProps> = ({
+  healthPoints,
+  bossName,
+}) => {
   const [maxHealthPoints, setMaxHealthPoints] = useState(healthPoints);
   const [healthPercentage, setHealthPercentage] = useState(100);
 
   useEffect(() => {
-    setMaxHealthPoints(healthPoints);
-  }, []);
+    //when boss changes set max health
+    setMaxHealthPoints(bossStatsCalculator(bossName).healthPoints);
+  }, [bossName]);
 
   useEffect(() => {
     setHealthPercentage((healthPoints / maxHealthPoints) * 100);
-    //set maxhealtpoints if healthpoints increases
-    if (healthPoints > maxHealthPoints) {
-      setMaxHealthPoints(healthPoints);
-    }
-    console.log(maxHealthPoints, healthPoints);
   }, [healthPoints, maxHealthPoints]);
 
   const styleHealthBar = (healthpercentage: number) => ({
