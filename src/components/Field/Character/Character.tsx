@@ -51,19 +51,31 @@ export const Character: React.FC<CharacterProps> = ({
   useEffect(() => {
     //get charactername if it changes
     getCharacterName(characterName);
-  }, [characterName]);
+  }, [characterName, getCharacterName]);
 
   useEffect(() => {
     //when getDamageInfo changes (skillBar is pressed)
     setSkillTarget(
-      targetCalculator(characterName, characterStatus, characterList).enemyName
+      targetCalculator(
+        characterName,
+        characterStatus,
+        characterList,
+        stageStatus[1]
+      ).enemyName
     );
-  }, [getDamageInfo]);
-  setTimeout(() => {}, 500);
+  }, [
+    getDamageInfo,
+    characterList,
+    characterName,
+    characterStatus,
+    stageStatus[1],
+  ]);
 
   useEffect(() => {
     if (stageStatus[0] !== "ongoing") {
       setSkillBarDisabled(true);
+    } else if (stageStatus[0] === "ongoing") {
+      setSkillBarDisabled(false);
     }
   }, [stageStatus[0]]);
 
@@ -72,7 +84,7 @@ export const Character: React.FC<CharacterProps> = ({
     if (
       //if bossturn and character is not dead and not dead after the attack
       bossTurn &&
-      characterStatus[characterStatusIndexSelect()] !== "dead" &&
+      characterStatus[0] !== "dead" &&
       healthPointCalculator(recievedDamage, healthPoints) > 0 &&
       stageStatus[0] === "ongoing"
     ) {
@@ -82,7 +94,7 @@ export const Character: React.FC<CharacterProps> = ({
         setSkillBarDisabled(false);
       }, 200);
     }
-  }, [bossTurn]);
+  }, [bossTurn, characterStatus, healthPoints, recievedDamage, stageStatus[0]]);
 
   useEffect(() => {
     //if damagedFlag is updated and true
@@ -92,27 +104,19 @@ export const Character: React.FC<CharacterProps> = ({
     ) {
       setHealthPoints(healthPointCalculator(recievedDamage, healthPoints));
 
-      characterStatus[characterStatusIndexSelect()] = "alive";
+      characterStatus[0] = "alive";
     } else if (
       healthPointCalculator(recievedDamage, healthPoints) <= 0 &&
-      characterStatus[characterStatusIndexSelect()] !== "dead" &&
+      characterStatus[0] !== "dead" &&
       damagedFlag === true
     ) {
       //healthPoints <=0, character is dead
       setHealthPoints(healthPointCalculator(recievedDamage, healthPoints));
-      characterStatus[characterStatusIndexSelect()] = "dead";
+      characterStatus[0] = "dead";
       setSkillBarDisabled(true);
       stageStatus[0] = "enemieswin";
     }
-  }, [damagedFlag]);
-
-  function characterStatusIndexSelect() {
-    return characterName === "character1"
-      ? 0
-      : characterName === "minion1"
-      ? 1
-      : 2;
-  }
+  }, [damagedFlag, characterStatus, healthPoints, recievedDamage, stageStatus[0]]);
 
   return (
     <>

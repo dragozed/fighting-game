@@ -1,7 +1,8 @@
 export const targetCalculator = (
   charactername: string,
   characterstatus: string[],
-  characterlist: string[]
+  characterlist: string[],
+  stageStatus: number
 ) => {
   let enemyName: string = "";
 
@@ -12,14 +13,13 @@ export const targetCalculator = (
   }
 
   if (charactername === "character1") {
-    enemyName = "boss1";
+    enemyName = "boss" + stageStatus;
   } else if (charactername === "minion1") {
-    enemyName = "boss1";
-  } else if (charactername === "boss1") {
+    enemyName = "boss" + stageStatus;
+  } else if (charactername === "boss" + stageStatus) {
     characterlist = characterlist.filter((item) => item.length > 1); //filter character list, dump empty strings
     enemyName = characterlist[Math.floor(Math.random() * characterlist.length)];
   }
-
 
   return { enemyName };
 };

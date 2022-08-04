@@ -14,7 +14,7 @@ function App() {
   return (
     <CharacterStatusContext.Provider value={["alive", "alive", "alive"]}>
       <CharacterListContext.Provider value={["character1", "minion1"]}>
-        <StageStatusContext.Provider value={["ongoing"]}>
+        <StageStatusContext.Provider value={["ongoing", 1]}>
           <div className="App">
             <ThemeProvider theme={theme}>
               <Layout>

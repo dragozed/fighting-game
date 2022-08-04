@@ -39,16 +39,15 @@ export const Home: React.FC = () => {
               variant="contained"
               disabled={isGameStarted}
               onClick={() => {
-                {
-                  //i am not sure why i should do it like that but other methods dont work
-                  characterList[0] = "character1";
-                  characterList[1] = "minion1";
-                  characterStatus[0] = "alive";
-                  characterStatus[1] = "alive";
-                  characterStatus[2] = "alive";
-                  stageStatus[0] = "ongoing";
-                  setIsGameStarted(true);
-                }
+                //i am not sure why i should do it like that but other methods dont work
+                characterList[0] = "character1";
+                characterList[1] = "minion1";
+                characterStatus[0] = "alive";
+                characterStatus[1] = "alive";
+                characterStatus[2] = "alive";
+                stageStatus[0] = "ongoing";
+                stageStatus[1] = 1;
+                setIsGameStarted(true);
               }}
             >
               Start

@@ -62,6 +62,26 @@ export const EndStageModal: React.FC<EndStageModalProps> = ({
         Close
       </Button>
       {stageStatus[0] === "allieswin" ? (
+        <Button
+          size="large"
+          className="modalButton"
+          sx={{ top: "5rem" }}
+          color="secondary"
+          variant="contained"
+          onClick={() => {
+            setModalIsOpen(false);
+            getIsGameStarted(true);
+            stageStatus[0] = "ongoing";
+            stageStatus[1] = stageStatus[1] + 1;
+          }}
+        >
+          Next Stage
+        </Button>
+      ) : (
+        ""
+      )}
+
+      {stageStatus[0] === "allieswin" ? (
         <ReactAudioPlayer
           src="https://cdn.pixabay.com/audio/2021/08/04/audio_12b0c7443c.mp3?filename=success-fanfare-trumpets-6185.mp3"
           autoPlay

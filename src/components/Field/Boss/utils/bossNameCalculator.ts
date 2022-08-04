@@ -1,8 +1,7 @@
-export const bossNameCalculator = (stagename: string) => {
+export const bossNameCalculator = (stageno: number) => {
   let bossName = "";
 
-  if (stagename === "stage1") {
-    bossName = "boss1";
-  }
+  bossName = "boss" + stageno;
+
   return bossName;
 };

@@ -16,7 +16,7 @@ export const HealthBar: React.FC<HealthBarProps> = ({ healthPoints }) => {
     if (healthPoints > maxHealthPoints) {
       setMaxHealthPoints(healthPoints);
     }
-  }, [healthPoints]);
+  }, [healthPoints, maxHealthPoints]);
 
   const styleHealthBar = (healthpercentage: string) => ({
     background:

@@ -24,7 +24,10 @@ export const Field: React.FC<FieldProps> = ({ getIsGameStarted }) => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
 
   const getCharacterName = (charactername: string): void => {
-    characterNames.push(charactername);
+    //if charactername doesnt exist push it
+    if (characterNames.indexOf(charactername) === -1) {
+      characterNames.push(charactername);
+    }
   };
 
   const getDamageInfo = (skilldamage: number, targetname: string): void => {
@@ -36,17 +39,18 @@ export const Field: React.FC<FieldProps> = ({ getIsGameStarted }) => {
     targetname: string,
     characternames: Array<string>
   ) {
-    if (characternames[1] === targetname) {
+    if (characternames.indexOf(targetname) === 1) {
       setDamagedFlag1(true);
-    } else if (characternames[2] === targetname) {
+    } else if (characternames.indexOf(targetname) === 2) {
       setDamagedFlag2(true);
-    } else if (characternames[3] === targetname) {
+    } else if (characternames.indexOf(targetname) > 2) {
       setDamagedFlag3(true);
     } else {
       setDamagedFlag1(false);
       setDamagedFlag2(false);
       setDamagedFlag3(false);
     }
+    console.log(characternames);
   }
 
   useEffect(() => {
@@ -56,7 +60,7 @@ export const Field: React.FC<FieldProps> = ({ getIsGameStarted }) => {
       setDamagedFlag2(false);
       setBossTurn(false);
     }
-    if (damagedFlag3 && stageStatus) {
+    if (damagedFlag3) {
       setDamagedFlag3(false);
       setBossTurn(true);
     }
@@ -68,6 +72,13 @@ export const Field: React.FC<FieldProps> = ({ getIsGameStarted }) => {
       setModalIsOpen(true);
     }
   }, [stageStatus[0]]);
+
+  useEffect(() => {
+    //if modal is open set bossturn false so boss dont attack after modal
+    if (modalIsOpen === true && bossTurn === true) {
+      setBossTurn(false);
+    }
+  }, [modalIsOpen]);
 
   return (
     <>
@@ -96,7 +107,7 @@ export const Field: React.FC<FieldProps> = ({ getIsGameStarted }) => {
       <div className="enemies">
         <div className="boss">
           <Boss
-            stageName={"stage1"}
+            stageNo={stageStatus[1]}
             getDamageInfo={getDamageInfo}
             getCharacterName={getCharacterName}
             damagedFlag={damagedFlag3}

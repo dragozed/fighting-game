@@ -13,7 +13,7 @@ import { bossNameCalculator } from "./utils/bossNameCalculator";
 import "./Boss.scss";
 
 interface BossProps {
-  stageName: string;
+  stageNo: number;
   getDamageInfo: (skilldamage: number, targetname: string) => void; //goes to field
   getCharacterName: (charactername: string) => void; //goes to field
   damagedFlag: boolean; //checks if damaged
@@ -22,14 +22,14 @@ interface BossProps {
 }
 
 export const Boss: React.FC<BossProps> = ({
-  stageName,
+  stageNo,
   getDamageInfo,
   getCharacterName,
   damagedFlag,
   recievedDamage,
   bossTurn,
 }) => {
-  const [bossName, setBossName] = useState(bossNameCalculator(stageName));
+  const [bossName, setBossName] = useState(bossNameCalculator(stageNo));
   //set character stats according to characterName
   const [skillDamage, setSkillDamage] = useState(
     bossStatsCalculator(bossName).skillDamage
@@ -44,17 +44,23 @@ export const Boss: React.FC<BossProps> = ({
     bossStatsCalculator(bossName).skillName
   );
   const [skillTarget, setSkillTarget] = useState("");
-
   const characterStatus = useContext(CharacterStatusContext);
-
   const characterList = useContext(CharacterListContext);
-
   const stageStatus = useContext(StageStatusContext);
 
   useEffect(() => {
     //get charactername if it changes
     getCharacterName(bossName);
-  }, []);
+  }, [bossName, getCharacterName]);
+
+  useEffect(() => {
+    //when stage changes set new boss
+    setBossName(bossNameCalculator(stageNo));
+    setSkillDamage(bossStatsCalculator(bossName).skillDamage);
+    setHealthPoints(bossStatsCalculator(bossName).healthPoints);
+    setSkillCount(bossStatsCalculator(bossName).skillCount);
+    setSkillName(bossStatsCalculator(bossName).skillName);
+  }, [stageNo, bossName]);
 
   useEffect(() => {
     //get charactername if it changes
@@ -66,14 +72,15 @@ export const Boss: React.FC<BossProps> = ({
     if (bossTurn && stageStatus[0] === "ongoing") {
       getDamageInfo(skillDamage, skillTarget);
     }
-  }, [bossTurn]);
+  }, [bossTurn, getDamageInfo, skillDamage, skillTarget, stageStatus[0]]);
 
   useEffect(() => {
     //when getDamageInfo changes
     setSkillTarget(
-      targetCalculator(bossName, characterStatus, characterList).enemyName
+      targetCalculator(bossName, characterStatus, characterList, stageStatus[1])
+        .enemyName
     );
-  }, [getDamageInfo]);
+  }, [getDamageInfo, bossName, characterStatus, characterList, stageStatus[1]]);
 
   useEffect(() => {
     //if damagedFlag is updated and true
@@ -83,22 +90,24 @@ export const Boss: React.FC<BossProps> = ({
     ) {
       setHealthPoints(healthPointCalculator(recievedDamage, healthPoints));
 
-      characterStatus[characterStatusIndexSelect()] = "alive";
+      characterStatus[2] = "alive";
     } else if (
       healthPointCalculator(recievedDamage, healthPoints) <= 0 &&
-      characterStatus[characterStatusIndexSelect()] !== "dead" &&
+      characterStatus[2] !== "dead" &&
       damagedFlag === true
     ) {
       //healthPoints <=0, character is dead
       setHealthPoints(healthPointCalculator(recievedDamage, healthPoints));
-      characterStatus[characterStatusIndexSelect()] = "dead";
+      characterStatus[2] = "dead";
       stageStatus[0] = "allieswin";
     }
-  }, [damagedFlag]);
-
-  function characterStatusIndexSelect() {
-    return bossName === "character1" ? 0 : bossName === "minion1" ? 1 : 2;
-  }
+  }, [
+    damagedFlag,
+    characterStatus,
+    healthPoints,
+    recievedDamage,
+    stageStatus[0],
+  ]);
 
   return (
     <>
