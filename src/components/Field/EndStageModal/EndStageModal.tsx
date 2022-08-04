@@ -27,11 +27,11 @@ export const EndStageModal: React.FC<EndStageModalProps> = ({
       isOpen={modalIsOpen}
       onRequestClose={() => (
         setModalIsOpen(false),
-        stageStatus.stagestatus === "allieswin"
+        stageStatus.stagestatus === "allieswin" && stageStatus.stagenumber < 2
           ? (getIsGameStarted(true),
             (stageStatus.stagestatus = "ongoing"),
             (stageStatus.stagenumber = stageStatus.stagenumber + 1))
-          : ""
+          : (getIsGameStarted(false), (stageStatus.stagestatus = "ongoing"))
       )}
       style={{
         overlay: {

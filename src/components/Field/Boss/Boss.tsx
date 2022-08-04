@@ -63,8 +63,9 @@ export const Boss: React.FC<BossProps> = ({
   }, [stageNo, bossName]);
 
   useEffect(() => {
-    //get charactername if it changes
+    //when boss changes
     getCharacterName(bossName);
+    characterStatus.boss = "alive";
   }, [bossName]);
 
   useEffect(() => {
