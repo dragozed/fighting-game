@@ -1,6 +1,6 @@
 # Fighting Game
 
-This project is created by [me] (https://github.com/dragozed) to develop a better understanding of React and TypeScript.
+This project is created by [me](https://github.com/dragozed) to develop a better understanding of React and TypeScript.
 
 ## What is Fighting Game?
 
