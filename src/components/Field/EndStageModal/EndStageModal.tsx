@@ -43,29 +43,17 @@ export const EndStageModal: React.FC<EndStageModalProps> = ({
         {stageStatus[0] === "allieswin" ? "You Won!" : "YOU DIED"}
       </Typography>
       <Typography variant="h5" textAlign="center">
-        {stageStatus[0] === "allieswin"
+        {stageStatus[0] === "allieswin" && stageStatus[1] === 2
           ? "That was the last stage, game is over. Back to lobby."
+          : stageStatus[0] === "allieswin"
+          ? "Go next stage"
           : "Back to lobby"}
       </Typography>
-      <Button
-        size="large"
-        className="modalButton"
-        sx={{ top: "1rem" }}
-        color="secondary"
-        variant="contained"
-        onClick={() => {
-          setModalIsOpen(false);
-          getIsGameStarted(false);
-          stageStatus[0] = "ongoing";
-        }}
-      >
-        Close
-      </Button>
       {stageStatus[0] === "allieswin" ? (
         <Button
           size="large"
           className="modalButton"
-          sx={{ top: "5rem" }}
+          sx={{ top: "1rem" }}
           color="secondary"
           variant="contained"
           onClick={() => {
@@ -80,6 +68,20 @@ export const EndStageModal: React.FC<EndStageModalProps> = ({
       ) : (
         ""
       )}
+      <Button
+        size="large"
+        className="modalButton"
+        sx={{ top: "2rem" }}
+        color="secondary"
+        variant="contained"
+        onClick={() => {
+          setModalIsOpen(false);
+          getIsGameStarted(false);
+          stageStatus[0] = "ongoing";
+        }}
+      >
+        Close
+      </Button>
 
       {stageStatus[0] === "allieswin" ? (
         <ReactAudioPlayer
