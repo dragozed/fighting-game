@@ -56,7 +56,7 @@ export const EndStageModal: React.FC<EndStageModalProps> = ({
           ? "Go next stage"
           : "Back to lobby"}
       </Typography>
-      {stageStatus[0] === "allieswin" && stageStatus[1] <= 2 ? (
+      {stageStatus[0] === "allieswin" && stageStatus[1] < 2 ? (
         <Button
           size="large"
           className="modalButton"

@@ -10,7 +10,7 @@ export const bossStatsCalculator = (name: string) => {
     skillName = "Attack(10)";
     skillDamage = 10;
   } else if (name === "boss2") {
-    healthPoints = 75;
+    healthPoints = 60;
     skillCount = 1;
     skillName = "Attack(15)";
     skillDamage = 15;
