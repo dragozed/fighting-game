@@ -60,7 +60,7 @@ export const Minion: React.FC<MinionProps> = ({
         characterName,
         characterStatus,
         characterList,
-        stageStatus[1]
+        stageStatus.stagenumber
       ).enemyName
     );
   }, [
@@ -68,14 +68,14 @@ export const Minion: React.FC<MinionProps> = ({
     characterName,
     characterStatus,
     characterList,
-    stageStatus[1],
+    stageStatus.stagenumber,
   ]);
 
   useEffect(() => {
     if (
       //if bossturn and character is not dead and not dead after the attack
       bossTurn &&
-      characterStatus[1] !== "dead" &&
+      characterStatus.minion1 !== "dead" &&
       healthPointCalculator(recievedDamage, healthPoints) > 0
     ) {
       //disable skill bar for some time so its not spammable to create bugs
@@ -94,15 +94,15 @@ export const Minion: React.FC<MinionProps> = ({
     ) {
       setHealthPoints(healthPointCalculator(recievedDamage, healthPoints));
 
-      characterStatus[1] = "alive";
+      characterStatus.minion1 = "alive";
     } else if (
       healthPointCalculator(recievedDamage, healthPoints) <= 0 &&
-      characterStatus[1] !== "dead" &&
+      characterStatus.minion1 !== "dead" &&
       damagedFlag === true
     ) {
       //healthPoints <=0, character is dead
       setHealthPoints(healthPointCalculator(recievedDamage, healthPoints));
-      characterStatus[1] = "dead";
+      characterStatus.minion1 = "dead";
       setSkillBarDisabled(true);
     }
   }, [damagedFlag, characterStatus, healthPoints, recievedDamage]);

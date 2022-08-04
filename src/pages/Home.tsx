@@ -12,7 +12,7 @@ export const Home: React.FC = () => {
   const [isGameStarted, setIsGameStarted] = useState(false);
   const characterStatus = useContext(CharacterStatusContext);
   const characterList = useContext(CharacterListContext);
-  const stageStatus = useContext(StageStatusContext);
+  let stageStatus = useContext(StageStatusContext);
 
   const getIsGameStarted = (isgamestarted: boolean): void => {
     setIsGameStarted(isgamestarted);
@@ -42,11 +42,11 @@ export const Home: React.FC = () => {
                 //i am not sure why i should do it like that but other methods dont work
                 characterList[0] = "character1";
                 characterList[1] = "minion1";
-                characterStatus[0] = "alive";
-                characterStatus[1] = "alive";
-                characterStatus[2] = "alive";
-                stageStatus[0] = "ongoing";
-                stageStatus[1] = 1;
+                characterStatus.character1 = "alive";
+                characterStatus.minion1 = "alive";
+                characterStatus.boss = "alive";
+                stageStatus.stagestatus = "ongoing";
+                stageStatus.stagenumber = 1;
                 setIsGameStarted(true);
               }}
             >

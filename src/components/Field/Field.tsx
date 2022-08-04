@@ -67,10 +67,13 @@ export const Field: React.FC<FieldProps> = ({ getIsGameStarted }) => {
 
   useEffect(() => {
     //open modal if some side wins
-    if (stageStatus[0] === "allieswin" || stageStatus[0] === "enemieswin") {
+    if (
+      stageStatus.stagestatus === "allieswin" ||
+      stageStatus.stagestatus === "enemieswin"
+    ) {
       setModalIsOpen(true);
     }
-  }, [stageStatus[0]]);
+  }, [stageStatus.stagestatus]);
 
   useEffect(() => {
     //if modal is open set bossturn false so boss dont attack after modal
@@ -104,9 +107,9 @@ export const Field: React.FC<FieldProps> = ({ getIsGameStarted }) => {
         </div>
       </div>
       <div className="enemies">
-        <div className={"boss" + stageStatus[1]}>
+        <div className={"boss" + stageStatus.stagenumber}>
           <Boss
-            stageNo={stageStatus[1]}
+            stageNo={stageStatus.stagenumber}
             getDamageInfo={getDamageInfo}
             getCharacterName={getCharacterName}
             damagedFlag={damagedFlag3}

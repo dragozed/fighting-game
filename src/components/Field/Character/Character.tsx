@@ -60,7 +60,7 @@ export const Character: React.FC<CharacterProps> = ({
         characterName,
         characterStatus,
         characterList,
-        stageStatus[1]
+        stageStatus.stagenumber
       ).enemyName
     );
   }, [
@@ -68,25 +68,25 @@ export const Character: React.FC<CharacterProps> = ({
     characterList,
     characterName,
     characterStatus,
-    stageStatus[1],
+    stageStatus.stagenumber,
   ]);
 
   useEffect(() => {
-    if (stageStatus[0] !== "ongoing") {
+    if (stageStatus.stagestatus !== "ongoing") {
       setSkillBarDisabled(true);
-    } else if (stageStatus[0] === "ongoing") {
+    } else if (stageStatus.stagestatus === "ongoing") {
       setSkillBarDisabled(false);
     }
-  }, [stageStatus[0]]);
+  }, [stageStatus.stagestatus]);
 
   useEffect(() => {
     //used against skillBar spams leading to bugs
     if (
       //if bossturn and character is not dead and not dead after the attack
       bossTurn &&
-      characterStatus[0] !== "dead" &&
+      characterStatus.character1 !== "dead" &&
       healthPointCalculator(recievedDamage, healthPoints) > 0 &&
-      stageStatus[0] === "ongoing"
+      stageStatus.stagestatus === "ongoing"
     ) {
       //disable skill bar for some time so its not spammable to create bugs
       setSkillBarDisabled(true);
@@ -94,7 +94,13 @@ export const Character: React.FC<CharacterProps> = ({
         setSkillBarDisabled(false);
       }, 200);
     }
-  }, [bossTurn, characterStatus, healthPoints, recievedDamage, stageStatus[0]]);
+  }, [
+    bossTurn,
+    characterStatus,
+    healthPoints,
+    recievedDamage,
+    stageStatus.stagestatus,
+  ]);
 
   useEffect(() => {
     //if damagedFlag is updated and true
@@ -104,19 +110,25 @@ export const Character: React.FC<CharacterProps> = ({
     ) {
       setHealthPoints(healthPointCalculator(recievedDamage, healthPoints));
 
-      characterStatus[0] = "alive";
+      characterStatus.character1 = "alive";
     } else if (
       healthPointCalculator(recievedDamage, healthPoints) <= 0 &&
-      characterStatus[0] !== "dead" &&
+      characterStatus.character1 !== "dead" &&
       damagedFlag === true
     ) {
       //healthPoints <=0, character is dead
       setHealthPoints(healthPointCalculator(recievedDamage, healthPoints));
-      characterStatus[0] = "dead";
+      characterStatus.character1 = "dead";
       setSkillBarDisabled(true);
-      stageStatus[0] = "enemieswin";
+      stageStatus.stagestatus = "enemieswin";
     }
-  }, [damagedFlag, characterStatus, healthPoints, recievedDamage, stageStatus[0]]);
+  }, [
+    damagedFlag,
+    characterStatus,
+    healthPoints,
+    recievedDamage,
+    stageStatus.stagestatus,
+  ]);
 
   return (
     <>

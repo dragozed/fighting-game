@@ -69,18 +69,34 @@ export const Boss: React.FC<BossProps> = ({
 
   useEffect(() => {
     //when its bossTurn
-    if (bossTurn && stageStatus[0] === "ongoing") {
+    if (bossTurn && stageStatus.stagestatus === "ongoing") {
       getDamageInfo(skillDamage, skillTarget);
     }
-  }, [bossTurn, getDamageInfo, skillDamage, skillTarget, stageStatus[0]]);
+  }, [
+    bossTurn,
+    getDamageInfo,
+    skillDamage,
+    skillTarget,
+    stageStatus.stagestatus,
+  ]);
 
   useEffect(() => {
     //when getDamageInfo changes
     setSkillTarget(
-      targetCalculator(bossName, characterStatus, characterList, stageStatus[1])
-        .enemyName
+      targetCalculator(
+        bossName,
+        characterStatus,
+        characterList,
+        stageStatus.stagenumber
+      ).enemyName
     );
-  }, [getDamageInfo, bossName, characterStatus, characterList, stageStatus[1]]);
+  }, [
+    getDamageInfo,
+    bossName,
+    characterStatus,
+    characterList,
+    stageStatus.stagenumber,
+  ]);
 
   useEffect(() => {
     //if damagedFlag is updated and true
@@ -90,23 +106,24 @@ export const Boss: React.FC<BossProps> = ({
     ) {
       setHealthPoints(healthPointCalculator(recievedDamage, healthPoints));
 
-      characterStatus[2] = "alive";
+      characterStatus.boss = "alive";
     } else if (
       healthPointCalculator(recievedDamage, healthPoints) <= 0 &&
-      characterStatus[2] !== "dead" &&
+      characterStatus.boss !== "dead" &&
       damagedFlag === true
     ) {
       //healthPoints <=0, character is dead
       setHealthPoints(healthPointCalculator(recievedDamage, healthPoints));
-      characterStatus[2] = "dead";
-      stageStatus[0] = "allieswin";
+      characterStatus.boss = "dead";
+      stageStatus.stagestatus = "allieswin";
     }
+    console.log(healthPoints);
   }, [
     damagedFlag,
     characterStatus,
     healthPoints,
     recievedDamage,
-    stageStatus[0],
+    stageStatus.stagestatus,
   ]);
 
   return (

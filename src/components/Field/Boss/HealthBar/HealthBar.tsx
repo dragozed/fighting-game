@@ -8,19 +8,24 @@ interface HealthBarProps {
 
 export const HealthBar: React.FC<HealthBarProps> = ({ healthPoints }) => {
   const [maxHealthPoints, setMaxHealthPoints] = useState(healthPoints);
-  const [healthPercentage, setHealthPercentage] = useState(100 + "%");
+  const [healthPercentage, setHealthPercentage] = useState(100);
 
   useEffect(() => {
-    setHealthPercentage((healthPoints / maxHealthPoints) * 100 + "%");
+    setMaxHealthPoints(healthPoints);
+  }, []);
+
+  useEffect(() => {
+    setHealthPercentage((healthPoints / maxHealthPoints) * 100);
     //set maxhealtpoints if healthpoints increases
     if (healthPoints > maxHealthPoints) {
       setMaxHealthPoints(healthPoints);
     }
+    console.log(maxHealthPoints, healthPoints);
   }, [healthPoints, maxHealthPoints]);
 
-  const styleHealthBar = (healthpercentage: string) => ({
+  const styleHealthBar = (healthpercentage: number) => ({
     background:
-      "linear-gradient(90deg, red " + healthpercentage + ", white 0%)",
+      "linear-gradient(90deg, red " + healthpercentage + "%, white 0%)",
     border: "solid",
     borderColor: "brown",
   });

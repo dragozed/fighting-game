@@ -10,11 +10,22 @@ import { StageStatusContext } from "./contexts/StageStatusContext";
 
 import "./App.css";
 
+const stageStatus = {
+  stagestatus: "",
+  stagenumber: 1,
+};  
+
+const characterStatus = {
+  character1: "alive",
+  minion1: "alive",
+  boss: "alive",
+};
+
 function App() {
   return (
-    <CharacterStatusContext.Provider value={["alive", "alive", "alive"]}>
+    <CharacterStatusContext.Provider value={characterStatus}>
       <CharacterListContext.Provider value={["character1", "minion1"]}>
-        <StageStatusContext.Provider value={["ongoing", 1]}>
+        <StageStatusContext.Provider value={stageStatus}>
           <div className="App">
             <ThemeProvider theme={theme}>
               <Layout>

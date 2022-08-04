@@ -1,14 +1,14 @@
 export const targetCalculator = (
   charactername: string,
-  characterstatus: string[],
+  characterstatus: { character1: string; minion1: string; boss: string }, //{ character1: string; minion1: string; boss: string; }
   characterlist: string[],
   stageStatus: number
 ) => {
   let enemyName: string = "";
 
-  if (characterstatus[0] === "dead") {
+  if (characterstatus.character1 === "dead") {
     characterlist[0] = "";
-  } else if (characterstatus[1] === "dead") {
+  } else if (characterstatus.minion1 === "dead") {
     characterlist[1] = "";
   }
 

@@ -27,10 +27,10 @@ export const EndStageModal: React.FC<EndStageModalProps> = ({
       isOpen={modalIsOpen}
       onRequestClose={() => (
         setModalIsOpen(false),
-        stageStatus[0] === "allieswin"
+        stageStatus.stagestatus === "allieswin"
           ? (getIsGameStarted(true),
-            (stageStatus[0] = "ongoing"),
-            (stageStatus[1] = stageStatus[1] + 1))
+            (stageStatus.stagestatus = "ongoing"),
+            (stageStatus.stagenumber = stageStatus.stagenumber + 1))
           : ""
       )}
       style={{
@@ -47,16 +47,18 @@ export const EndStageModal: React.FC<EndStageModalProps> = ({
       }}
     >
       <Typography variant="h3" textAlign="center">
-        {stageStatus[0] === "allieswin" ? "You Won!" : "YOU DIED"}
+        {stageStatus.stagestatus === "allieswin" ? "You Won!" : "YOU DIED"}
       </Typography>
       <Typography variant="h5" textAlign="center">
-        {stageStatus[0] === "allieswin" && stageStatus[1] === 2
+        {stageStatus.stagestatus === "allieswin" &&
+        stageStatus.stagenumber === 2
           ? "That was the last stage, game is over. Back to lobby."
-          : stageStatus[0] === "allieswin"
+          : stageStatus.stagestatus === "allieswin"
           ? "Go next stage"
           : "Back to lobby"}
       </Typography>
-      {stageStatus[0] === "allieswin" && stageStatus[1] < 2 ? (
+      {stageStatus.stagestatus === "allieswin" &&
+      stageStatus.stagenumber < 2 ? (
         <Button
           size="large"
           className="modalButton"
@@ -66,8 +68,8 @@ export const EndStageModal: React.FC<EndStageModalProps> = ({
           onClick={() => {
             setModalIsOpen(false);
             getIsGameStarted(true);
-            stageStatus[0] = "ongoing";
-            stageStatus[1] = stageStatus[1] + 1;
+            stageStatus.stagestatus = "ongoing";
+            stageStatus.stagenumber = stageStatus.stagenumber + 1;
           }}
         >
           Next Stage
@@ -84,18 +86,18 @@ export const EndStageModal: React.FC<EndStageModalProps> = ({
         onClick={() => {
           setModalIsOpen(false);
           getIsGameStarted(false);
-          stageStatus[0] = "ongoing";
+          stageStatus.stagestatus = "ongoing";
         }}
       >
         Close
       </Button>
 
-      {stageStatus[0] === "allieswin" ? (
+      {stageStatus.stagestatus === "allieswin" ? (
         <ReactAudioPlayer
           src="https://cdn.pixabay.com/audio/2021/08/04/audio_12b0c7443c.mp3?filename=success-fanfare-trumpets-6185.mp3"
           autoPlay
         />
-      ) : stageStatus[0] === "enemieswin" ? (
+      ) : stageStatus.stagestatus === "enemieswin" ? (
         <ReactAudioPlayer
           src="https://static.wikia.nocookie.net/dota2_gamepedia/images/c/c4/Misc_soundboard_sad_bone.mp3"
           autoPlay
