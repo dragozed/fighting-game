@@ -25,7 +25,14 @@ export const EndStageModal: React.FC<EndStageModalProps> = ({
   return (
     <Modal
       isOpen={modalIsOpen}
-      onRequestClose={() => setModalIsOpen(false)}
+      onRequestClose={() => (
+        setModalIsOpen(false),
+        stageStatus[0] === "allieswin"
+          ? (getIsGameStarted(true),
+            (stageStatus[0] = "ongoing"),
+            (stageStatus[1] = stageStatus[1] + 1))
+          : ""
+      )}
       style={{
         overlay: {
           backgroundColor: "grey",
@@ -49,7 +56,7 @@ export const EndStageModal: React.FC<EndStageModalProps> = ({
           ? "Go next stage"
           : "Back to lobby"}
       </Typography>
-      {stageStatus[0] === "allieswin" ? (
+      {stageStatus[0] === "allieswin" && stageStatus[1] <= 2 ? (
         <Button
           size="large"
           className="modalButton"
