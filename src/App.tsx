@@ -27,6 +27,9 @@ const villageStatus = {
   stone: 10,
   iron: 5,
   trainingGroundsLevel: 0,
+  trainingGroundsWoodReq: 5,
+  trainingGroundsStoneReq: 5,
+  trainingGroundsIronReq: 0,
 };
 
 function App() {

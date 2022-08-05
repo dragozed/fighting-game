@@ -1,8 +1,11 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Button, Typography } from "@mui/material";
 
+import { Materials } from "./Materials/Materials";
+
 import { VillageStatusContext } from "../../contexts/VillageStatusContext";
 
+import { villageRequirementsCalculator } from "./utils/villageRequirementsCalculator";
 import "./Village.scss";
 
 interface VillageProps {
@@ -10,10 +13,36 @@ interface VillageProps {
 }
 
 export const Village: React.FC<VillageProps> = ({ getIsVillageOpen }) => {
-  const [villageStatus, setVillageStatus] = useState(
-    useContext(VillageStatusContext)
-  );
-  const [trainingGroundsReq, setTrainingGroundsReq] = useState([0, 0, 0]); //wood,stone,iron
+  const villageStatus = useContext(VillageStatusContext);
+
+  useEffect(() => {
+    console.log(villageStatus);
+  }, [villageStatus.wood]);
+
+  function trainingGroundsOnClick() {
+    villageStatus.wood =
+      villageStatus.wood - villageStatus.trainingGroundsWoodReq;
+
+    villageStatus.stone =
+      villageStatus.stone - villageStatus.trainingGroundsStoneReq;
+    villageStatus.iron =
+      villageStatus.iron - villageStatus.trainingGroundsIronReq;
+
+    villageStatus.trainingGroundsLevel = villageStatus.trainingGroundsLevel + 1;
+
+    villageStatus.trainingGroundsWoodReq = villageRequirementsCalculator(
+      "TrainingGrounds",
+      villageStatus.trainingGroundsLevel
+    ).woodReq;
+    villageStatus.trainingGroundsStoneReq = villageRequirementsCalculator(
+      "TrainingGrounds",
+      villageStatus.trainingGroundsLevel
+    ).stoneReq;
+    villageStatus.trainingGroundsIronReq = villageRequirementsCalculator(
+      "TrainingGrounds",
+      villageStatus.trainingGroundsLevel
+    ).ironReq;
+  }
 
   return (
     <>
@@ -31,15 +60,11 @@ export const Village: React.FC<VillageProps> = ({ getIsVillageOpen }) => {
       </Button>
       <div className="village">
         <div className="materials">
-          <Typography variant="h5" textAlign="center">
-            {"Wood=" + villageStatus.wood}
-          </Typography>
-          <Typography variant="h5" textAlign="center">
-            {"Stone=" + villageStatus.stone}
-          </Typography>
-          <Typography variant="h5" textAlign="center">
-            {"Iron=" + villageStatus.iron}
-          </Typography>
+          <Materials
+            wood={villageStatus.wood}
+            stone={villageStatus.stone}
+            iron={villageStatus.iron}
+          />
         </div>
         <div className="buildings">
           <div className="row">
@@ -54,22 +79,18 @@ export const Village: React.FC<VillageProps> = ({ getIsVillageOpen }) => {
               color="secondary"
               variant="contained"
               onClick={() => {
-                setVillageStatus((prevState) => ({
-                  //thats important for setting OBJECTS with usestate
-                  ...prevState,
-                  trainingGroundsLevel: villageStatus.trainingGroundsLevel + 1,
-                }));
+                trainingGroundsOnClick();
               }}
             >
               +
             </Button>
             <Typography variant="h5" textAlign="center">
               {"Requirements=" +
-                trainingGroundsReq[0] +
+                villageStatus.trainingGroundsWoodReq +
                 " wood " +
-                trainingGroundsReq[1] +
+                villageStatus.trainingGroundsStoneReq +
                 " stone " +
-                trainingGroundsReq[2] +
+                villageStatus.trainingGroundsIronReq +
                 " iron "}
             </Typography>
           </div>

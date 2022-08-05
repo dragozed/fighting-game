@@ -6,6 +6,7 @@ import { Village } from "../components/Village/Village";
 import { CharacterStatusContext } from "../contexts/CharacterStatusContext";
 import { CharacterListContext } from "../contexts/CharacterListContext";
 import { StageStatusContext } from "../contexts/StageStatusContext";
+import { VillageStatusContext } from "../contexts/VillageStatusContext";
 
 import "./Home.scss";
 
@@ -15,6 +16,7 @@ export const Home: React.FC = () => {
   const characterStatus = useContext(CharacterStatusContext);
   const characterList = useContext(CharacterListContext);
   let stageStatus = useContext(StageStatusContext);
+  let villageStatus = useContext(VillageStatusContext);
 
   const getIsGameStarted = (isgamestarted: boolean): void => {
     setIsGameStarted(isgamestarted);
@@ -65,13 +67,6 @@ export const Home: React.FC = () => {
               variant="contained"
               disabled={isGameStarted}
               onClick={() => {
-                characterList[0] = "character1";
-                characterList[1] = "minion1";
-                characterStatus.character1 = "alive";
-                characterStatus.minion1 = "alive";
-                characterStatus.boss = "alive";
-                stageStatus.stagestatus = "ongoing";
-                stageStatus.stagenumber = 1;
                 setIsVillageOpen(true);
               }}
             >
