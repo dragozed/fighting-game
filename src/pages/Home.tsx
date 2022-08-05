@@ -2,6 +2,7 @@ import React, { useState, useContext } from "react";
 import { Button, Typography } from "@mui/material";
 
 import { Field } from "../components/Field/Field";
+import { Village } from "../components/Village/Village";
 import { CharacterStatusContext } from "../contexts/CharacterStatusContext";
 import { CharacterListContext } from "../contexts/CharacterListContext";
 import { StageStatusContext } from "../contexts/StageStatusContext";
@@ -10,6 +11,7 @@ import "./Home.scss";
 
 export const Home: React.FC = () => {
   const [isGameStarted, setIsGameStarted] = useState(false);
+  const [isVillageOpen, setIsVillageOpen] = useState(false);
   const characterStatus = useContext(CharacterStatusContext);
   const characterList = useContext(CharacterListContext);
   let stageStatus = useContext(StageStatusContext);
@@ -17,10 +19,13 @@ export const Home: React.FC = () => {
   const getIsGameStarted = (isgamestarted: boolean): void => {
     setIsGameStarted(isgamestarted);
   };
+  const getIsVillageOpen = (isvillageopen: boolean): void => {
+    setIsVillageOpen(isvillageopen);
+  };
 
   return (
     <div className="home">
-      {!isGameStarted ? (
+      {!isGameStarted && !isVillageOpen ? (
         <>
           <div className="text-button">
             <Typography
@@ -52,24 +57,36 @@ export const Home: React.FC = () => {
             >
               Start
             </Button>
+            <Button //start button
+              size="large"
+              sx={{ margin: "1rem" }}
+              className="villageButton"
+              color="primary"
+              variant="contained"
+              disabled={isGameStarted}
+              onClick={() => {
+                characterList[0] = "character1";
+                characterList[1] = "minion1";
+                characterStatus.character1 = "alive";
+                characterStatus.minion1 = "alive";
+                characterStatus.boss = "alive";
+                stageStatus.stagestatus = "ongoing";
+                stageStatus.stagenumber = 1;
+                setIsVillageOpen(true);
+              }}
+            >
+              Village
+            </Button>
           </div>
         </>
-      ) : (
+      ) : isGameStarted ? (
         <>
-          <Button
-            size="large"
-            className="backButton"
-            sx={{ position: "absolute", top: "1rem", left: "1rem" }}
-            color="secondary"
-            variant="contained"
-            onClick={() => {
-              setIsGameStarted(false);
-            }}
-          >
-            Back
-          </Button>
           <Field getIsGameStarted={getIsGameStarted} />
         </>
+      ) : isVillageOpen ? (
+        <Village getIsVillageOpen={getIsVillageOpen} />
+      ) : (
+        "You Shouldnt be here"
       )}
     </div>
   );

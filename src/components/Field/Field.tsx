@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
+import { Button } from "@mui/material";
 
 import { Character } from "./Character/Character";
 import { Boss } from "./Boss/Boss";
@@ -84,6 +85,18 @@ export const Field: React.FC<FieldProps> = ({ getIsGameStarted }) => {
 
   return (
     <>
+      <Button
+        size="large"
+        className="backButton"
+        sx={{ position: "absolute", top: "1rem", left: "1rem" }}
+        color="secondary"
+        variant="contained"
+        onClick={() => {
+          getIsGameStarted(false);
+        }}
+      >
+        Back
+      </Button>
       <div className="allies">
         <Character
           characterName={"character1"}
@@ -103,14 +116,14 @@ export const Field: React.FC<FieldProps> = ({ getIsGameStarted }) => {
         />
       </div>
       <div className="enemies">
-          <Boss
-            stageNo={stageStatus.stagenumber}
-            getDamageInfo={getDamageInfo}
-            getCharacterName={getCharacterName}
-            damagedFlag={damagedFlag3}
-            recievedDamage={recievedDamage}
-            bossTurn={bossTurn}
-          />
+        <Boss
+          stageNo={stageStatus.stagenumber}
+          getDamageInfo={getDamageInfo}
+          getCharacterName={getCharacterName}
+          damagedFlag={damagedFlag3}
+          recievedDamage={recievedDamage}
+          bossTurn={bossTurn}
+        />
       </div>
       <EndStageModal
         modalIsOpen={modalIsOpen}

@@ -7,13 +7,14 @@ import { Home } from "./pages/Home";
 import { CharacterStatusContext } from "./contexts/CharacterStatusContext";
 import { CharacterListContext } from "./contexts/CharacterListContext";
 import { StageStatusContext } from "./contexts/StageStatusContext";
+import { VillageStatusContext } from "./contexts/VillageStatusContext";
 
 import "./App.css";
 
 const stageStatus = {
   stagestatus: "",
   stagenumber: 1,
-};  
+};
 
 const characterStatus = {
   character1: "alive",
@@ -21,18 +22,27 @@ const characterStatus = {
   boss: "alive",
 };
 
+const villageStatus = {
+  wood: 10,
+  stone: 10,
+  iron: 5,
+  trainingGroundsLevel: 0,
+};
+
 function App() {
   return (
     <CharacterStatusContext.Provider value={characterStatus}>
       <CharacterListContext.Provider value={["character1", "minion1"]}>
         <StageStatusContext.Provider value={stageStatus}>
-          <div className="App">
-            <ThemeProvider theme={theme}>
-              <Layout>
-                <Home />
-              </Layout>
-            </ThemeProvider>
-          </div>
+          <VillageStatusContext.Provider value={villageStatus}>
+            <div className="App">
+              <ThemeProvider theme={theme}>
+                <Layout>
+                  <Home />
+                </Layout>
+              </ThemeProvider>
+            </div>
+          </VillageStatusContext.Provider>
         </StageStatusContext.Provider>
       </CharacterListContext.Provider>
     </CharacterStatusContext.Provider>
