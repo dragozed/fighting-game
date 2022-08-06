@@ -1,5 +1,6 @@
 import React from "react";
 import { Typography } from "@mui/material";
+import "./Materials.scss";
 
 interface MaterialsProps {
   wood: number;

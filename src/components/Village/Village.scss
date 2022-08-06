@@ -1,14 +1,25 @@
 .village {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  background-image: url("img/bg.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
 }
+
 .row {
   display: flex;
   flex-direction: row;
+  height: 500px;
 }
 
-.materials {
+.col {
   display: flex;
-  flex-direction: column;
+}
+
+.col h5 {
+  margin: 0 10px;
+}
+
+.addressImg {
+  margin-top: 53%;
 }

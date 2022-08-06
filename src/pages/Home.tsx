@@ -76,7 +76,9 @@ export const Home: React.FC = () => {
         </>
       ) : isGameStarted ? (
         <>
-          <Field getIsGameStarted={getIsGameStarted} />
+          <div className="field">
+            <Field getIsGameStarted={getIsGameStarted} />
+          </div>
         </>
       ) : isVillageOpen ? (
         <Village getIsVillageOpen={getIsVillageOpen} />
