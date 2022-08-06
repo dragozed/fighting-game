@@ -1,7 +1,14 @@
+.home {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  align-content: space-between;
+}
+
 .howToPlay {
   margin-top: 5rem;
 }
-
 .text-button {
   display: flex;
   flex-direction: column;
