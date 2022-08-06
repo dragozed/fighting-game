@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useContext } from "react";
 import { Button, Typography } from "@mui/material";
 
 import { Materials } from "./Materials/Materials";
@@ -13,36 +13,28 @@ interface VillageProps {
 }
 
 export const Village: React.FC<VillageProps> = ({ getIsVillageOpen }) => {
-  const villageStatus = useContext(VillageStatusContext);
+  const { data, setData } = useContext(VillageStatusContext);
 
-  useEffect(() => {
-    console.log(villageStatus);
-  }, [villageStatus.wood]);
-
-  function trainingGroundsOnClick() {
-    villageStatus.wood =
-      villageStatus.wood - villageStatus.trainingGroundsWoodReq;
-
-    villageStatus.stone =
-      villageStatus.stone - villageStatus.trainingGroundsStoneReq;
-    villageStatus.iron =
-      villageStatus.iron - villageStatus.trainingGroundsIronReq;
-
-    villageStatus.trainingGroundsLevel = villageStatus.trainingGroundsLevel + 1;
-
-    villageStatus.trainingGroundsWoodReq = villageRequirementsCalculator(
-      "TrainingGrounds",
-      villageStatus.trainingGroundsLevel
-    ).woodReq;
-    villageStatus.trainingGroundsStoneReq = villageRequirementsCalculator(
-      "TrainingGrounds",
-      villageStatus.trainingGroundsLevel
-    ).stoneReq;
-    villageStatus.trainingGroundsIronReq = villageRequirementsCalculator(
-      "TrainingGrounds",
-      villageStatus.trainingGroundsLevel
-    ).ironReq;
-  }
+  const trainingGroundsOnClick = () => {
+    setData({
+      wood: data.wood - data.trainingGroundsWoodReq,
+      iron: data.iron - data.trainingGroundsIronReq,
+      stone: data.stone - data.trainingGroundsStoneReq,
+      trainingGroundsLevel: data.trainingGroundsLevel + 1,
+      trainingGroundsWoodReq: villageRequirementsCalculator(
+        "TrainingGrounds",
+        data.trainingGroundsLevel
+      ).woodReq,
+      trainingGroundsIronReq: villageRequirementsCalculator(
+        "TrainingGrounds",
+        data.trainingGroundsLevel
+      ).ironReq,
+      trainingGroundsStoneReq: villageRequirementsCalculator(
+        "TrainingGrounds",
+        data.trainingGroundsLevel
+      ).stoneReq,
+    });
+  };
 
   return (
     <>
@@ -60,16 +52,12 @@ export const Village: React.FC<VillageProps> = ({ getIsVillageOpen }) => {
       </Button>
       <div className="village">
         <div className="materials">
-          <Materials
-            wood={villageStatus.wood}
-            stone={villageStatus.stone}
-            iron={villageStatus.iron}
-          />
+          <Materials wood={data.wood} stone={data.stone} iron={data.iron} />
         </div>
         <div className="buildings">
           <div className="row">
             <Typography variant="h5" textAlign="center">
-              {"TrainingGroundsLevel=" + villageStatus.trainingGroundsLevel}
+              {"TrainingGroundsLevel=" + data.trainingGroundsLevel}
             </Typography>
             <Button
               size="small"
@@ -86,11 +74,11 @@ export const Village: React.FC<VillageProps> = ({ getIsVillageOpen }) => {
             </Button>
             <Typography variant="h5" textAlign="center">
               {"Requirements=" +
-                villageStatus.trainingGroundsWoodReq +
+                data.trainingGroundsWoodReq +
                 " wood " +
-                villageStatus.trainingGroundsStoneReq +
+                data.trainingGroundsStoneReq +
                 " stone " +
-                villageStatus.trainingGroundsIronReq +
+                data.trainingGroundsIronReq +
                 " iron "}
             </Typography>
           </div>
