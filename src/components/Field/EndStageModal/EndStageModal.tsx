@@ -4,7 +4,6 @@ import ReactAudioPlayer from "react-audio-player";
 import { Button, Typography } from "@mui/material";
 
 import { StageStatusContext } from "../../../contexts/StageStatusContext";
-import { VillageStatusContext } from "../../../contexts/VillageStatusContext";
 
 import "./EndStageModal.scss";
 
@@ -22,7 +21,6 @@ export const EndStageModal: React.FC<EndStageModalProps> = ({
   getIsGameStarted,
 }) => {
   const stageStatus = useContext(StageStatusContext);
-  const { data, setData } = useContext(VillageStatusContext);
 
   return (
     <Modal
@@ -59,11 +57,6 @@ export const EndStageModal: React.FC<EndStageModalProps> = ({
           ? "Go next stage"
           : "Back to lobby"}
       </Typography>
-      <Typography textAlign="center">{"Current Resources:"}</Typography>
-      <Typography textAlign="center">{"Wood:" + data.wood}</Typography>
-      <Typography textAlign="center">{"Stone:" + data.stone}</Typography>
-      <Typography textAlign="center">{"Iron:" + data.iron}</Typography>
-
       {stageStatus.stagestatus === "allieswin" &&
       stageStatus.stagenumber < 2 ? (
         <Button
