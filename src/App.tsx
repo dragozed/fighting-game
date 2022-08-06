@@ -1,4 +1,5 @@
 import React from "react";
+import { useState } from "react";
 import ThemeProvider from "@mui/material/styles/ThemeProvider";
 
 import { theme } from "./utils/theme";
@@ -8,6 +9,7 @@ import { CharacterStatusContext } from "./contexts/CharacterStatusContext";
 import { CharacterListContext } from "./contexts/CharacterListContext";
 import { StageStatusContext } from "./contexts/StageStatusContext";
 import { VillageStatusContext } from "./contexts/VillageStatusContext";
+import { VillageStatusType } from "./types/VillageStatusType";
 
 import "./App.css";
 
@@ -15,29 +17,29 @@ const stageStatus = {
   stagestatus: "",
   stagenumber: 1,
 };
-
 const characterStatus = {
   character1: "alive",
   minion1: "alive",
   boss: "alive",
 };
 
-const villageStatus = {
-  wood: 10,
-  stone: 10,
-  iron: 5,
-  trainingGroundsLevel: 0,
-  trainingGroundsWoodReq: 5,
-  trainingGroundsStoneReq: 5,
-  trainingGroundsIronReq: 0,
-};
 
 function App() {
+  const [data, setData] = useState<VillageStatusType>({
+    wood: 0,
+    stone: 0,
+    iron: 0,
+    trainingGroundsLevel: 0,
+    trainingGroundsWoodReq: 5,
+    trainingGroundsStoneReq: 5,
+    trainingGroundsIronReq: 0,
+  });
+
   return (
     <CharacterStatusContext.Provider value={characterStatus}>
       <CharacterListContext.Provider value={["character1", "minion1"]}>
         <StageStatusContext.Provider value={stageStatus}>
-          <VillageStatusContext.Provider value={villageStatus}>
+          <VillageStatusContext.Provider value={{ data, setData }}>
             <div className="App">
               <ThemeProvider theme={theme}>
                 <Layout>
