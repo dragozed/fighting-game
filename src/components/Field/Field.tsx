@@ -7,7 +7,9 @@ import { Minion } from "./Minion/Minion";
 import { EndStageModal } from "./EndStageModal/EndStageModal";
 
 import { StageStatusContext } from "../../contexts/StageStatusContext";
+import { VillageStatusContext } from "../../contexts/VillageStatusContext";
 
+import { stageRewardCalculator } from "./utils/stageRewardCalculator";
 import "./Field.scss";
 
 interface FieldProps {
@@ -21,8 +23,9 @@ export const Field: React.FC<FieldProps> = ({ getIsGameStarted }) => {
   const [damagedFlag3, setDamagedFlag3] = useState(false);
   const [recievedDamage, setRecievedDamage] = useState(0); //goes to character
   const [bossTurn, setBossTurn] = useState(false);
-  const stageStatus = useContext(StageStatusContext);
   const [modalIsOpen, setModalIsOpen] = useState(false);
+  const stageStatus = useContext(StageStatusContext);
+  const { data, setData } = useContext(VillageStatusContext);
 
   const getCharacterName = (charactername: string): void => {
     //if charactername doesnt exist push it
@@ -73,6 +76,30 @@ export const Field: React.FC<FieldProps> = ({ getIsGameStarted }) => {
       stageStatus.stagestatus === "enemieswin"
     ) {
       setModalIsOpen(true);
+      setData({
+        wood:
+          data.wood +
+          stageRewardCalculator(
+            stageStatus.stagestatus,
+            stageStatus.stagenumber
+          ).wood,
+        iron:
+          data.iron +
+          stageRewardCalculator(
+            stageStatus.stagestatus,
+            stageStatus.stagenumber
+          ).iron,
+        stone:
+          data.stone +
+          stageRewardCalculator(
+            stageStatus.stagestatus,
+            stageStatus.stagenumber
+          ).stone,
+        trainingGroundsLevel: data.trainingGroundsLevel,
+        trainingGroundsWoodReq: data.trainingGroundsWoodReq,
+        trainingGroundsIronReq: data.trainingGroundsIronReq,
+        trainingGroundsStoneReq: data.trainingGroundsStoneReq,
+      });
     }
   }, [stageStatus.stagestatus]);
 
