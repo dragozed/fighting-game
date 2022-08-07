@@ -4,6 +4,7 @@
   background-image: url("img/bg.jpg");
   background-repeat: no-repeat;
   background-size: cover;
+  height: 100vh;
 }
 
 .row {
@@ -21,5 +22,19 @@
 }
 
 .addressImg {
-  margin-top: 53%;
+  margin-top: 31rem;
+  margin-left: 10rem;
+  height: 200px;
+}
+
+.firstMaterials {
+  display: flex;
+  flex-direction: column;
+  margin-top: 30px;
+}
+
+.lastMaterials {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
