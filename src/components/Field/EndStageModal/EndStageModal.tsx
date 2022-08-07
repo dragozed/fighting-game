@@ -22,7 +22,7 @@ export const EndStageModal: React.FC<EndStageModalProps> = ({
   getIsGameStarted,
 }) => {
   const stageStatus = useContext(StageStatusContext);
-  const { data, setData } = useContext(VillageStatusContext);
+  const { villageStatus, setVillageStatus } = useContext(VillageStatusContext);
 
   return (
     <Modal
@@ -60,9 +60,11 @@ export const EndStageModal: React.FC<EndStageModalProps> = ({
           : "Back to lobby"}
       </Typography>
       <Typography textAlign="center">{"Current Resources:"}</Typography>
-      <Typography textAlign="center">{"Wood:" + data.wood}</Typography>
-      <Typography textAlign="center">{"Stone:" + data.stone}</Typography>
-      <Typography textAlign="center">{"Iron:" + data.iron}</Typography>
+      <Typography textAlign="center">{"Wood:" + villageStatus.wood}</Typography>
+      <Typography textAlign="center">
+        {"Stone:" + villageStatus.stone}
+      </Typography>
+      <Typography textAlign="center">{"Iron:" + villageStatus.iron}</Typography>
 
       {stageStatus.stagestatus === "allieswin" &&
       stageStatus.stagenumber < 2 ? (

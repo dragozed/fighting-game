@@ -25,7 +25,7 @@ export const Field: React.FC<FieldProps> = ({ getIsGameStarted }) => {
   const [bossTurn, setBossTurn] = useState(false);
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const stageStatus = useContext(StageStatusContext);
-  const { data, setData } = useContext(VillageStatusContext);
+  const { villageStatus, setVillageStatus } = useContext(VillageStatusContext);
 
   const getCharacterName = (charactername: string): void => {
     //if charactername doesnt exist push it
@@ -76,29 +76,29 @@ export const Field: React.FC<FieldProps> = ({ getIsGameStarted }) => {
       stageStatus.stagestatus === "enemieswin"
     ) {
       setModalIsOpen(true);
-      setData({
+      setVillageStatus({
         wood:
-          data.wood +
+          villageStatus.wood +
           stageRewardCalculator(
             stageStatus.stagestatus,
             stageStatus.stagenumber
           ).wood,
         iron:
-          data.iron +
+          villageStatus.iron +
           stageRewardCalculator(
             stageStatus.stagestatus,
             stageStatus.stagenumber
           ).iron,
         stone:
-          data.stone +
+          villageStatus.stone +
           stageRewardCalculator(
             stageStatus.stagestatus,
             stageStatus.stagenumber
           ).stone,
-        trainingGroundsLevel: data.trainingGroundsLevel,
-        trainingGroundsWoodReq: data.trainingGroundsWoodReq,
-        trainingGroundsIronReq: data.trainingGroundsIronReq,
-        trainingGroundsStoneReq: data.trainingGroundsStoneReq,
+        trainingGroundsLevel: villageStatus.trainingGroundsLevel,
+        trainingGroundsWoodReq: villageStatus.trainingGroundsWoodReq,
+        trainingGroundsIronReq: villageStatus.trainingGroundsIronReq,
+        trainingGroundsStoneReq: villageStatus.trainingGroundsStoneReq,
       });
     }
   }, [stageStatus.stagestatus]);
