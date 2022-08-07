@@ -38,6 +38,7 @@ export const Boss: React.FC<BossProps> = ({
   const [healthPoints, setHealthPoints] = useState(
     bossStatsCalculator(bossName).healthPoints
   );
+  const [armor, setArmor] = useState(bossStatsCalculator(bossName).armor);
   const [skillCount, setSkillCount] = useState(
     bossStatsCalculator(bossName).skillCount
   );
@@ -65,6 +66,7 @@ export const Boss: React.FC<BossProps> = ({
     setBossName(bossNameCalculator(stageNo));
     setSkillDamage(bossStatsCalculator(bossName).skillDamage);
     setHealthPoints(bossStatsCalculator(bossName).healthPoints);
+    setArmor(bossStatsCalculator(bossName).armor);
     setSkillCount(bossStatsCalculator(bossName).skillCount);
     setSkillName(bossStatsCalculator(bossName).skillName);
     setBossVisualName(bossStatsCalculator(bossName).bossVisualName);
@@ -111,19 +113,23 @@ export const Boss: React.FC<BossProps> = ({
   useEffect(() => {
     //if damagedFlag is updated and true
     if (
-      healthPointCalculator(recievedDamage, healthPoints) > 0 &&
+      healthPointCalculator(recievedDamage, healthPoints, armor) > 0 &&
       damagedFlag === true
     ) {
-      setHealthPoints(healthPointCalculator(recievedDamage, healthPoints));
+      setHealthPoints(
+        healthPointCalculator(recievedDamage, healthPoints, armor)
+      );
 
       characterStatus.boss = "alive";
     } else if (
-      healthPointCalculator(recievedDamage, healthPoints) <= 0 &&
+      healthPointCalculator(recievedDamage, healthPoints, armor) <= 0 &&
       characterStatus.boss !== "dead" &&
       damagedFlag === true
     ) {
       //healthPoints <=0, character is dead
-      setHealthPoints(healthPointCalculator(recievedDamage, healthPoints));
+      setHealthPoints(
+        healthPointCalculator(recievedDamage, healthPoints, armor)
+      );
       characterStatus.boss = "dead";
       stageStatus.stagestatus = "allieswin";
     }
@@ -141,6 +147,7 @@ export const Boss: React.FC<BossProps> = ({
         <div className="boss-topbar">
           <HealthBar
             healthPoints={healthPoints}
+            armor={armor}
             bossName={bossName}
             bossVisualName={bossVisualName}
           />

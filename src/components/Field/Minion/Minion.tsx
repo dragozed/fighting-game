@@ -36,6 +36,9 @@ export const Minion: React.FC<MinionProps> = ({
   const [healthPoints, setHealthPoints] = useState(
     minionStatsCalculator(characterName).healthPoints
   );
+  const [armor, setArmor] = useState(
+    minionStatsCalculator(characterName).armor
+  );
   const [skillCount, setSkillCount] = useState(
     minionStatsCalculator(characterName).skillCount
   );
@@ -79,7 +82,7 @@ export const Minion: React.FC<MinionProps> = ({
       //if bossturn and character is not dead and not dead after the attack
       bossTurn &&
       characterStatus.minion1 !== "dead" &&
-      healthPointCalculator(recievedDamage, healthPoints) > 0
+      healthPointCalculator(recievedDamage, healthPoints, armor) > 0
     ) {
       //disable skill bar for some time so its not spammable to create bugs
       setSkillBarDisabled(true);
@@ -92,19 +95,23 @@ export const Minion: React.FC<MinionProps> = ({
   useEffect(() => {
     //if damagedFlag is updated and true
     if (
-      healthPointCalculator(recievedDamage, healthPoints) > 0 &&
+      healthPointCalculator(recievedDamage, healthPoints, armor) > 0 &&
       damagedFlag === true
     ) {
-      setHealthPoints(healthPointCalculator(recievedDamage, healthPoints));
+      setHealthPoints(
+        healthPointCalculator(recievedDamage, healthPoints, armor)
+      );
 
       characterStatus.minion1 = "alive";
     } else if (
-      healthPointCalculator(recievedDamage, healthPoints) <= 0 &&
+      healthPointCalculator(recievedDamage, healthPoints, armor) <= 0 &&
       characterStatus.minion1 !== "dead" &&
       damagedFlag === true
     ) {
       //healthPoints <=0, character is dead
-      setHealthPoints(healthPointCalculator(recievedDamage, healthPoints));
+      setHealthPoints(
+        healthPointCalculator(recievedDamage, healthPoints, armor)
+      );
       characterStatus.minion1 = "dead";
       setSkillBarDisabled(true);
     }
@@ -116,6 +123,7 @@ export const Minion: React.FC<MinionProps> = ({
         <div className="minion1-topbar">
           <HealthBar
             healthPoints={healthPoints}
+            armor={armor}
             characterVisualName={characterVisualName}
           />
         </div>

@@ -1,7 +1,10 @@
 .minion1-content {
-  margin: 1%;
-  height: 40%;
-  width: 70%;
+  padding: 1%;
+  max-height: 40%;
+  width: 45%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
 }
 
 .minion1 {

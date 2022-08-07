@@ -1,5 +1,6 @@
 export const bossStatsCalculator = (name: string) => {
   let healthPoints = 0;
+  let armor = 0;
   let skillCount = 0;
   let skillName = "none";
   let skillDamage = 0;
@@ -8,6 +9,7 @@ export const bossStatsCalculator = (name: string) => {
 
   if (name === "boss1") {
     healthPoints = 70;
+    armor = 2;
     skillCount = 1;
     skillName = "Attack(10)";
     skillDamage = 10;
@@ -16,6 +18,7 @@ export const bossStatsCalculator = (name: string) => {
       "https://upload.wikimedia.org/wikipedia/commons/b/be/Bicho-pregui%C3%A7a_3.jpg";
   } else if (name === "boss2") {
     healthPoints = 60;
+    armor = 0;
     skillCount = 1;
     skillName = "Attack(15)";
     skillDamage = 15;
@@ -25,6 +28,7 @@ export const bossStatsCalculator = (name: string) => {
   }
   return {
     healthPoints,
+    armor,
     skillCount,
     skillName,
     skillDamage,
