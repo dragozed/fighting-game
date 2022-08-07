@@ -6,6 +6,7 @@ import { SkillBar } from "./SkillBar/SkillBar";
 import { CharacterStatusContext } from "../../../contexts/CharacterStatusContext";
 import { CharacterListContext } from "../../../contexts/CharacterListContext";
 import { StageStatusContext } from "../../../contexts/StageStatusContext";
+import { VillageStatusContext } from "../../../contexts/VillageStatusContext";
 
 import { healthPointCalculator } from "../../../utils/healthPointCalculator";
 import { minionStatsCalculator } from "./utils/minionStatsCalculator";
@@ -29,9 +30,14 @@ export const Minion: React.FC<MinionProps> = ({
   recievedDamage,
   bossTurn,
 }) => {
+  const characterStatus = useContext(CharacterStatusContext);
+  const characterList = useContext(CharacterListContext);
+  const stageStatus = useContext(StageStatusContext);
+  const { villageStatus, setVillageStatus } = useContext(VillageStatusContext);
   //set character stats according to characterName
   const [skillDamage, setSkillDamage] = useState(
-    minionStatsCalculator(characterName).skillDamage
+    minionStatsCalculator(characterName).skillDamage +
+      villageStatus.trainingGroundsLevel * 5
   );
   const [healthPoints, setHealthPoints] = useState(
     minionStatsCalculator(characterName).healthPoints
@@ -49,10 +55,7 @@ export const Minion: React.FC<MinionProps> = ({
     minionStatsCalculator(characterName).characterVisualName
   );
   const [skillTarget, setSkillTarget] = useState("");
-  const characterStatus = useContext(CharacterStatusContext);
-  const characterList = useContext(CharacterListContext);
   const [skillBarDisabled, setSkillBarDisabled] = useState(false);
-  const stageStatus = useContext(StageStatusContext);
 
   useEffect(() => {
     //get charactername if it changes
