@@ -44,9 +44,7 @@ function App() {
           >
             <div className="App">
               <ThemeProvider theme={theme}>
-                <Layout>
-                  <Home />
-                </Layout>
+                <Home />
               </ThemeProvider>
             </div>
           </VillageStatusContext.Provider>
