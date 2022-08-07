@@ -15,7 +15,7 @@ import { VillageStatusContext } from "../../contexts/VillageStatusContext";
 import { villageRequirementsCalculator } from "./utils/villageRequirementsCalculator";
 import "./Village.scss";
 import address from "./img/address.png";
-import 'bootstrap/dist/css/bootstrap.min.css';
+import "bootstrap/dist/css/bootstrap.min.css";
 
 interface VillageProps {
   getIsVillageOpen: (isgamestarted: boolean) => void;
@@ -73,14 +73,18 @@ export const Village: React.FC<VillageProps> = ({ getIsVillageOpen }) => {
                   villageStatus.trainingGroundsIronReq +
                   " iron "}
               </Typography>
+              <Typography variant="h6" textAlign="center">
+                {"Currently giving +" +
+                  villageStatus.trainingGroundsLevel * 5 +
+                  " damage to character and minion"}
+              </Typography>
               <img src={address} height="200" className="addressImg" />
             </div>
 
             <div className="col 4 lastMaterials">
               <div className="bg-img">
                 <Typography variant="h5" textAlign="center">
-                  {"TrainingGroundsLevel=" +
-                    villageStatus.trainingGroundsLevel}
+                  {"TrainingGroundsLevel=" + villageStatus.trainingGroundsLevel}
                 </Typography>
                 <Button
                   size="small"

@@ -6,6 +6,7 @@ import { SkillBar } from "./SkillBar/SkillBar";
 import { CharacterStatusContext } from "../../../contexts/CharacterStatusContext";
 import { CharacterListContext } from "../../../contexts/CharacterListContext";
 import { StageStatusContext } from "../../../contexts/StageStatusContext";
+import { VillageStatusContext } from "../../../contexts/VillageStatusContext";
 
 import { healthPointCalculator } from "../../../utils/healthPointCalculator";
 import { characterStatsCalculator } from "./utils/characterStatsCalculator";
@@ -29,9 +30,14 @@ export const Character: React.FC<CharacterProps> = ({
   recievedDamage,
   bossTurn,
 }) => {
+  const characterStatus = useContext(CharacterStatusContext);
+  const characterList = useContext(CharacterListContext);
+  const stageStatus = useContext(StageStatusContext);
+  const { villageStatus, setVillageStatus } = useContext(VillageStatusContext);
   //set character stats according to characterName
   const [skillDamage, setSkillDamage] = useState(
-    characterStatsCalculator(characterName).skillDamage
+    characterStatsCalculator(characterName).skillDamage +
+      villageStatus.trainingGroundsLevel * 5
   );
   const [healthPoints, setHealthPoints] = useState(
     characterStatsCalculator(characterName).healthPoints
@@ -49,9 +55,6 @@ export const Character: React.FC<CharacterProps> = ({
     characterStatsCalculator(characterName).characterVisualName
   );
   const [skillTarget, setSkillTarget] = useState("");
-  const characterStatus = useContext(CharacterStatusContext);
-  const characterList = useContext(CharacterListContext);
-  const stageStatus = useContext(StageStatusContext);
   const [skillBarDisabled, setSkillBarDisabled] = useState(false);
 
   useEffect(() => {
