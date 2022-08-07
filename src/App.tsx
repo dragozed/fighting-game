@@ -5,6 +5,7 @@ import ThemeProvider from "@mui/material/styles/ThemeProvider";
 import { theme } from "./utils/theme";
 import { Layout } from "./components/layout/Layout";
 import { Home } from "./pages/Home";
+
 import { CharacterStatusContext } from "./contexts/CharacterStatusContext";
 import { CharacterListContext } from "./contexts/CharacterListContext";
 import { StageStatusContext } from "./contexts/StageStatusContext";
@@ -23,9 +24,8 @@ const characterStatus = {
   boss: "alive",
 };
 
-
 function App() {
-  const [data, setData] = useState<VillageStatusType>({
+  const [villageStatus, setVillageStatus] = useState<VillageStatusType>({
     wood: 0,
     stone: 0,
     iron: 0,
@@ -39,7 +39,9 @@ function App() {
     <CharacterStatusContext.Provider value={characterStatus}>
       <CharacterListContext.Provider value={["character1", "minion1"]}>
         <StageStatusContext.Provider value={stageStatus}>
-          <VillageStatusContext.Provider value={{ data, setData }}>
+          <VillageStatusContext.Provider
+            value={{ villageStatus, setVillageStatus }}
+          >
             <div className="App">
               <ThemeProvider theme={theme}>
                 <Layout>

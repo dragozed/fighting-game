@@ -1,5 +1,12 @@
 import React, { useContext } from "react";
-import { Button, Typography, Grid, Box, Container, AppBar } from "@mui/material";
+import {
+  Button,
+  Typography,
+  Grid,
+  Box,
+  Container,
+  AppBar,
+} from "@mui/material";
 
 import { Materials } from "./Materials/Materials";
 
@@ -7,35 +14,40 @@ import { VillageStatusContext } from "../../contexts/VillageStatusContext";
 
 import { villageRequirementsCalculator } from "./utils/villageRequirementsCalculator";
 import "./Village.scss";
-import address from './img/address.png';
-
+import address from "./img/address.png";
 
 interface VillageProps {
   getIsVillageOpen: (isgamestarted: boolean) => void;
 }
 
 export const Village: React.FC<VillageProps> = ({ getIsVillageOpen }) => {
-  const { data, setData } = useContext(VillageStatusContext);
+  const { villageStatus, setVillageStatus } = useContext(VillageStatusContext);
 
   const trainingGroundsOnClick = () => {
-    setData({
-      wood: data.wood - data.trainingGroundsWoodReq,
-      iron: data.iron - data.trainingGroundsIronReq,
-      stone: data.stone - data.trainingGroundsStoneReq,
-      trainingGroundsLevel: data.trainingGroundsLevel + 1,
-      trainingGroundsWoodReq: villageRequirementsCalculator(
-        "TrainingGrounds",
-        data.trainingGroundsLevel
-      ).woodReq,
-      trainingGroundsIronReq: villageRequirementsCalculator(
-        "TrainingGrounds",
-        data.trainingGroundsLevel
-      ).ironReq,
-      trainingGroundsStoneReq: villageRequirementsCalculator(
-        "TrainingGrounds",
-        data.trainingGroundsLevel
-      ).stoneReq,
-    });
+    if (
+      villageStatus.wood >= villageStatus.trainingGroundsWoodReq &&
+      villageStatus.stone >= villageStatus.trainingGroundsStoneReq &&
+      villageStatus.iron >= villageStatus.trainingGroundsIronReq
+    ) {
+      setVillageStatus({
+        wood: villageStatus.wood - villageStatus.trainingGroundsWoodReq,
+        iron: villageStatus.iron - villageStatus.trainingGroundsIronReq,
+        stone: villageStatus.stone - villageStatus.trainingGroundsStoneReq,
+        trainingGroundsLevel: villageStatus.trainingGroundsLevel + 1,
+        trainingGroundsWoodReq: villageRequirementsCalculator(
+          "TrainingGrounds",
+          villageStatus.trainingGroundsLevel
+        ).woodReq,
+        trainingGroundsIronReq: villageRequirementsCalculator(
+          "TrainingGrounds",
+          villageStatus.trainingGroundsLevel
+        ).ironReq,
+        trainingGroundsStoneReq: villageRequirementsCalculator(
+          "TrainingGrounds",
+          villageStatus.trainingGroundsLevel
+        ).stoneReq,
+      });
+    }
   };
 
   return (
@@ -46,16 +58,20 @@ export const Village: React.FC<VillageProps> = ({ getIsVillageOpen }) => {
             <div className="village">
               <Grid container spacing={12}>
                 <Grid item xs={4}>
-                  <Materials wood={data.wood} stone={data.stone} iron={data.iron} />
+                  <Materials
+                    wood={villageStatus.wood}
+                    stone={villageStatus.stone}
+                    iron={villageStatus.iron}
+                  />
                 </Grid>
                 <Grid item xs={4}>
                   <Typography variant="h5" textAlign="center">
                     {"Requirements=" +
-                      data.trainingGroundsWoodReq +
+                      villageStatus.trainingGroundsWoodReq +
                       " wood " +
-                      data.trainingGroundsStoneReq +
+                      villageStatus.trainingGroundsStoneReq +
                       " stone " +
-                      data.trainingGroundsIronReq +
+                      villageStatus.trainingGroundsIronReq +
                       " iron "}
                   </Typography>
                   <img src={address} height="200" className="addressImg" />
@@ -63,7 +79,8 @@ export const Village: React.FC<VillageProps> = ({ getIsVillageOpen }) => {
                 <Grid item xs={4}>
                   <div className="bg-img">
                     <Typography variant="h5" textAlign="center">
-                      {"TrainingGroundsLevel=" + data.trainingGroundsLevel}
+                      {"TrainingGroundsLevel=" +
+                        villageStatus.trainingGroundsLevel}
                     </Typography>
                     <Button
                       size="small"
