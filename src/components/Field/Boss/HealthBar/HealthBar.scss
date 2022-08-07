@@ -1,0 +1,15 @@
+.stats {
+  display: flex;
+  height: 30px;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+}
+.stats .armor {
+  text-align: center;
+  color: white;
+  background-image: url("../../img/armor.png");
+  background-size: contain;
+  width: 30px;
+  height: 30px;
+}

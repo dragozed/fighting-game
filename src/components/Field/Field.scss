@@ -4,21 +4,23 @@
   align-items: center;
   justify-content: center;
   align-content: space-between;
+  height: 100vh;
 }
 
 .allies {
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  height: 700px;
-  width: 50%;
   justify-content: space-between;
+  align-items: center;
+  width: 50%;
+  max-height: 100%;
 }
 
 .enemies {
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  height: 700px;
+  justify-content: space-between;
+  align-items: center;
   width: 50%;
+  max-height: 100%;
 }

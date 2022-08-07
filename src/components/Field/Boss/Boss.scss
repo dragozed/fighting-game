@@ -3,9 +3,12 @@
 }
 
 .boss-content {
-  margin: 1%;
+  padding: 1%;
   height: 40%;
-  width: 70%;
+  width: 45%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
 }
 
 .boss-topbar {

@@ -36,6 +36,9 @@ export const Character: React.FC<CharacterProps> = ({
   const [healthPoints, setHealthPoints] = useState(
     characterStatsCalculator(characterName).healthPoints
   );
+  const [armor, setArmor] = useState(
+    characterStatsCalculator(characterName).armor
+  );
   const [skillCount, setSkillCount] = useState(
     characterStatsCalculator(characterName).skillCount
   );
@@ -88,7 +91,7 @@ export const Character: React.FC<CharacterProps> = ({
       //if bossturn and character is not dead and not dead after the attack
       bossTurn &&
       characterStatus.character1 !== "dead" &&
-      healthPointCalculator(recievedDamage, healthPoints) > 0 &&
+      healthPointCalculator(recievedDamage, healthPoints, armor) > 0 &&
       stageStatus.stagestatus === "ongoing"
     ) {
       //disable skill bar for some time so its not spammable to create bugs
@@ -108,19 +111,23 @@ export const Character: React.FC<CharacterProps> = ({
   useEffect(() => {
     //if damagedFlag is updated and true
     if (
-      healthPointCalculator(recievedDamage, healthPoints) > 0 &&
+      healthPointCalculator(recievedDamage, healthPoints, armor) > 0 &&
       damagedFlag === true
     ) {
-      setHealthPoints(healthPointCalculator(recievedDamage, healthPoints));
+      setHealthPoints(
+        healthPointCalculator(recievedDamage, healthPoints, armor)
+      );
 
       characterStatus.character1 = "alive";
     } else if (
-      healthPointCalculator(recievedDamage, healthPoints) <= 0 &&
+      healthPointCalculator(recievedDamage, healthPoints, armor) <= 0 &&
       characterStatus.character1 !== "dead" &&
       damagedFlag === true
     ) {
       //healthPoints <=0, character is dead
-      setHealthPoints(healthPointCalculator(recievedDamage, healthPoints));
+      setHealthPoints(
+        healthPointCalculator(recievedDamage, healthPoints, armor)
+      );
       characterStatus.character1 = "dead";
       setSkillBarDisabled(true);
       stageStatus.stagestatus = "enemieswin";
@@ -139,6 +146,7 @@ export const Character: React.FC<CharacterProps> = ({
         <div className="character1-topbar">
           <HealthBar
             healthPoints={healthPoints}
+            armor={armor}
             characterVisualName={characterVisualName}
           />
         </div>
