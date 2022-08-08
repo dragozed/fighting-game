@@ -3,7 +3,6 @@ import { useState } from "react";
 import ThemeProvider from "@mui/material/styles/ThemeProvider";
 
 import { theme } from "./utils/theme";
-import { Layout } from "./components/layout/Layout";
 import { Home } from "./pages/Home";
 
 import { CharacterStatusContext } from "./contexts/CharacterStatusContext";
