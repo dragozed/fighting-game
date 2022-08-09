@@ -3,6 +3,7 @@ import { Button, Typography } from "@mui/material";
 
 import { Field } from "../components/Field/Field";
 import { Village } from "../components/Village/Village";
+import { UserList } from "../components/UserList/UserList";
 
 import { CharacterStatusContext } from "../contexts/CharacterStatusContext";
 import { CharacterListContext } from "../contexts/CharacterListContext";
@@ -86,6 +87,7 @@ export const Home: React.FC = () => {
       ) : (
         "You Shouldnt be here"
       )}
+      <UserList />
     </div>
   );
 };

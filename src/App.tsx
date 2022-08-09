@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import { useState } from "react";
 import ThemeProvider from "@mui/material/styles/ThemeProvider";
-import axios from "axios";
 
 import { theme } from "./utils/theme";
 import { Home } from "./pages/Home";
@@ -25,7 +24,6 @@ const characterStatus = {
 };
 
 function App() {
-  let userData: any;
 
   const [villageStatus, setVillageStatus] = useState<VillageStatusType>({
     wood: 0,
@@ -37,46 +35,6 @@ function App() {
     trainingGroundsIronReq: 0,
   });
 
-  const axiosGetData = async () => {
-    const response = await axios.get(
-      "https://fighting-game-backend.herokuapp.com/users"
-    );
-    const json = await response.data;
-    return json;
-  };
-
-  const axiosPostUser = async (username: string, userrole: string) => {
-    await axios.post(
-      "https://fighting-game-backend.herokuapp.com/users/addUser",
-      {
-        userName: username,
-        userRole: userrole,
-      }
-    );
-  };
-
-  const axiosUpdateUser = async (id: string) => {
-    await axios.post(
-      "https://fighting-game-backend.herokuapp.com/users/updateUser",
-      {
-        id: id,
-      }
-    );
-  };
-
-  const denemeOnClick = (): void => {
-    axiosUpdateUser(userData[1]._id);
-    console.log(userData);
-  };
-
-  useEffect(() => {
-    axiosGetData().then((data) => {
-      //get data THEN console.log(data)
-      console.log(data);
-      userData = data;
-    });
-  }, [axiosGetData]);
-
   return (
     <CharacterStatusContext.Provider value={characterStatus}>
       <CharacterListContext.Provider value={["character1", "minion1"]}>
@@ -86,7 +44,6 @@ function App() {
           >
             <div className="App">
               <ThemeProvider theme={theme}>
-                <button onClick={() => denemeOnClick()}></button>
                 <Home />
               </ThemeProvider>
             </div>
