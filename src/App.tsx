@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import ThemeProvider from "@mui/material/styles/ThemeProvider";
 import axios from "axios";
@@ -25,6 +25,8 @@ const characterStatus = {
 };
 
 function App() {
+  let userData: any;
+
   const [villageStatus, setVillageStatus] = useState<VillageStatusType>({
     wood: 0,
     stone: 0,
@@ -40,8 +42,7 @@ function App() {
       "https://fighting-game-backend.herokuapp.com/users"
     );
     const json = await response.data;
-    console.log(json);
-    return response;
+    return json;
   };
 
   const axiosPostUser = async (username: string, userrole: string) => {
@@ -54,10 +55,27 @@ function App() {
     );
   };
 
-  const denemeOnClick = (): void => {
-    axiosGetData();
-    axiosPostUser("Zort", "Zorter");
+  const axiosUpdateUser = async (id: string) => {
+    await axios.post(
+      "https://fighting-game-backend.herokuapp.com/users/updateUser",
+      {
+        id: id,
+      }
+    );
   };
+
+  const denemeOnClick = (): void => {
+    axiosUpdateUser(userData[1]._id);
+    console.log(userData);
+  };
+
+  useEffect(() => {
+    axiosGetData().then((data) => {
+      //get data THEN console.log(data)
+      console.log(data);
+      userData = data;
+    });
+  }, [axiosGetData]);
 
   return (
     <CharacterStatusContext.Provider value={characterStatus}>
