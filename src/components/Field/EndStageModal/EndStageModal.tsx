@@ -8,7 +8,7 @@ import { VillageStatusContext } from "../../../contexts/VillageStatusContext";
 
 import "./EndStageModal.scss";
 
-Modal.setAppElement("#root"); //to prevent assistive technologies such as screenreaders from reading content outside of the content of your modal
+Modal.setAppElement("#root"); //to prevent assistive technologies such as screenreaders from reading content outside of the content of modal
 
 interface EndStageModalProps {
   modalIsOpen: boolean;

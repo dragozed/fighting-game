@@ -3,7 +3,7 @@ import { Button, Typography } from "@mui/material";
 
 import { Field } from "../components/Field/Field";
 import { Village } from "../components/Village/Village";
-import { LoginModal } from "../components/LoginModal/LoginModal";
+import { RegisterModal } from "../components/RegisterModal/RegisterModal";
 import { UserList } from "../components/UserList/UserList";
 
 import { CharacterStatusContext } from "../contexts/CharacterStatusContext";
@@ -16,7 +16,7 @@ import "./Home.scss";
 export const Home: React.FC = () => {
   const [isGameStarted, setIsGameStarted] = useState(false);
   const [isVillageOpen, setIsVillageOpen] = useState(false);
-  const [isLoginOpen, setIsLoginOpen] = useState(false);
+  const [isRegisterOpen, setIsRegisterOpen] = useState(false);
   const characterStatus = useContext(CharacterStatusContext);
   const characterList = useContext(CharacterListContext);
   let stageStatus = useContext(StageStatusContext);
@@ -28,25 +28,25 @@ export const Home: React.FC = () => {
   const getIsVillageOpen = (isvillageopen: boolean): void => {
     setIsVillageOpen(isvillageopen);
   };
-  const getIsLoginOpen = (isloginopen: boolean): void => {
-    setIsLoginOpen(isloginopen);
+  const getIsRegisterOpen = (isregisteropen: boolean): void => {
+    setIsRegisterOpen(isregisteropen);
   };
 
   return (
     <div className="home">
-      {!isGameStarted && !isVillageOpen && !isLoginOpen ? ( //main menu
+      {!isGameStarted && !isVillageOpen && !isRegisterOpen ? ( //main menu
         <>
           <Button
             size="large"
-            className="loginButton"
+            className="registerButton"
             color="primary"
             variant="contained"
             disabled={false}
             onClick={() => {
-              setIsLoginOpen(true);
+              setIsRegisterOpen(true);
             }}
           >
-            Login
+            Register
           </Button>
           <div className="text-button">
             <Typography
@@ -101,8 +101,11 @@ export const Home: React.FC = () => {
         </>
       ) : isVillageOpen ? (
         <Village getIsVillageOpen={getIsVillageOpen} />
-      ) : isLoginOpen ? (
-        <LoginModal isLoginOpen={isLoginOpen} getIsLoginOpen={getIsLoginOpen} />
+      ) : isRegisterOpen ? (
+        <RegisterModal
+          isRegisterOpen={isRegisterOpen}
+          getIsRegisterOpen={getIsRegisterOpen}
+        />
       ) : (
         "You Shouldnt be here"
       )}
