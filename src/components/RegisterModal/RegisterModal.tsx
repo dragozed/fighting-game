@@ -71,6 +71,7 @@ export const RegisterModal: React.FC<RegisterModalProps> = ({
           <TextField label="E-Mail" name="eMail" onChange={changeHandler} />
           <TextField
             label="Password"
+            type="password"
             name="password"
             onChange={changeHandler}
           />
