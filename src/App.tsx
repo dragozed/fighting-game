@@ -8,6 +8,8 @@ import { Home } from "./pages/Home";
 import { CharacterStatusContext } from "./contexts/CharacterStatusContext";
 import { CharacterListContext } from "./contexts/CharacterListContext";
 import { StageStatusContext } from "./contexts/StageStatusContext";
+import { UserInfoContext } from "./contexts/UserInfoContext";
+import { UserInfoType } from "./types/UserInfoType";
 import { VillageStatusContext } from "./contexts/VillageStatusContext";
 import { VillageStatusType } from "./types/VillageStatusType";
 
@@ -24,7 +26,6 @@ const characterStatus = {
 };
 
 function App() {
-
   const [villageStatus, setVillageStatus] = useState<VillageStatusType>({
     wood: 0,
     stone: 0,
@@ -34,6 +35,10 @@ function App() {
     trainingGroundsStoneReq: 5,
     trainingGroundsIronReq: 0,
   });
+  const [userInfo, setUserInfo] = useState<UserInfoType>({
+    username: "",
+    email: "",
+  });
 
   return (
     <CharacterStatusContext.Provider value={characterStatus}>
@@ -42,11 +47,13 @@ function App() {
           <VillageStatusContext.Provider
             value={{ villageStatus, setVillageStatus }}
           >
-            <div className="App">
-              <ThemeProvider theme={theme}>
-                <Home />
-              </ThemeProvider>
-            </div>
+            <UserInfoContext.Provider value={{ userInfo, setUserInfo }}>
+              <div className="App">
+                <ThemeProvider theme={theme}>
+                  <Home />
+                </ThemeProvider>
+              </div>
+            </UserInfoContext.Provider>
           </VillageStatusContext.Provider>
         </StageStatusContext.Provider>
       </CharacterListContext.Provider>

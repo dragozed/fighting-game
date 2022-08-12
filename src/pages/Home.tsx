@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { Button, Typography, AppBar, Toolbar, Box } from "@mui/material";
 
 import { Field } from "../components/Field/Field";
@@ -7,6 +7,7 @@ import { RegisterModal } from "../components/RegisterModal/RegisterModal";
 import { LoginModal } from "../components/LoginModal/LoginModal";
 import { UserList } from "../components/UserList/UserList";
 
+import { UserInfoContext } from "../contexts/UserInfoContext";
 import { CharacterStatusContext } from "../contexts/CharacterStatusContext";
 import { CharacterListContext } from "../contexts/CharacterListContext";
 import { StageStatusContext } from "../contexts/StageStatusContext";
@@ -23,7 +24,7 @@ export const Home: React.FC = () => {
   const characterStatus = useContext(CharacterStatusContext);
   const characterList = useContext(CharacterListContext);
   let stageStatus = useContext(StageStatusContext);
-  let villageStatus = useContext(VillageStatusContext);
+  const { userInfo, setUserInfo } = useContext(UserInfoContext);
 
   const getIsGameStarted = (isgamestarted: boolean): void => {
     setIsGameStarted(isgamestarted);
@@ -49,7 +50,7 @@ export const Home: React.FC = () => {
             <AppBar color="secondary" position="static">
               <Toolbar>
                 {isLoginSuccessful ? (
-                  "Login Successful"
+                  "User:" + userInfo.username
                 ) : (
                   <>
                     <Button

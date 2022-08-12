@@ -1,8 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import Modal from "react-modal";
-import { Button, TextField, Typography } from "@mui/material";
+import { Button, TextField, Typography, FormControl } from "@mui/material";
 import axios from "axios";
 import bcrypt from "bcryptjs";
+
+import { UserInfoContext } from "../../contexts/UserInfoContext";
 
 Modal.setAppElement("#root"); //to prevent assistive technologies such as screenreaders from reading content outside of the content of modal
 
@@ -17,6 +19,8 @@ export const LoginModal: React.FC<LoginModalProps> = ({
   getIsLoginOpen,
   getIsLoginSuccessful,
 }) => {
+  const { userInfo, setUserInfo } = useContext(UserInfoContext);
+
   const [infoText, setInfoText] = useState(
     "Do not give your password to anyone else under any circumstances"
   );
@@ -43,14 +47,15 @@ export const LoginModal: React.FC<LoginModalProps> = ({
       );
 
       if (namePassMatchFlag) {
-        setInfoText("Login Successful");
+        //Login Successful
         getIsLoginSuccessful(true);
+        setUserInfo({ username: found.userName, email: found.eMail });
+        setInfoText("Login Successful");
+        getIsLoginOpen(false);
       } else {
         setInfoText("Password and username do not match");
       }
     }
-
-    console.log(namePassMatchFlag);
   };
 
   const changeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -80,39 +85,46 @@ export const LoginModal: React.FC<LoginModalProps> = ({
       }}
     >
       <Typography variant="h5">Login Form</Typography>
-      <form onSubmit={submitHandler}>
-        <TextField label="UserName" name="userName" onChange={changeHandler} />
-        <TextField
-          label="Password"
-          type="password"
-          name="password"
-          onChange={changeHandler}
-        />
-
-        <Typography variant="h6">{infoText}</Typography>
+      <FormControl variant="standard">
+        <form onSubmit={submitHandler}>
+          <TextField
+            label="UserName"
+            name="userName"
+            onChange={changeHandler}
+          />
+          <TextField
+            label="Password"
+            type="password"
+            name="password"
+            onChange={changeHandler}
+          />
+          <Button
+            type="submit"
+            size="large"
+            sx={{ top: "10%" }}
+            className="submitButton"
+            color="primary"
+            variant="contained"
+          >
+            Submit
+          </Button>
+        </form>
         <Button
-          type="submit"
           size="large"
-          sx={{ top: "10%" }}
-          className="submitButton"
-          color="primary"
+          className="backButton"
+          sx={{ top: "1rem" }}
+          color="secondary"
           variant="contained"
+          onClick={() => {
+            getIsLoginOpen(false);
+          }}
         >
-          Submit
+          Back
         </Button>
-      </form>
-      <Button
-        size="large"
-        className="backButton"
-        sx={{ top: "1rem" }}
-        color="secondary"
-        variant="contained"
-        onClick={() => {
-          getIsLoginOpen(false);
-        }}
-      >
-        Back
-      </Button>
+      </FormControl>
+      <Typography variant="h6" sx={{ mt: "2rem" }}>
+        {infoText}
+      </Typography>
     </Modal>
   );
 };

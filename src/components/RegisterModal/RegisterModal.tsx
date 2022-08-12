@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Modal from "react-modal";
-import { Button, TextField, Typography } from "@mui/material";
+import { Button, TextField, Typography, FormControl } from "@mui/material";
 import axios from "axios";
 import bcrypt from "bcryptjs";
 
@@ -21,7 +21,7 @@ export const RegisterModal: React.FC<RegisterModalProps> = ({
     eMail: "",
     password: "",
   });
-  const submitHandler = async (event: React.FormEvent<HTMLFormElement>) => {
+  const submitHandler = async (/*event: React.FormEvent<HTMLFormElement>*/) => {
     //async arrow func declaration
     await axios.post(
       "https://fighting-game-backend.herokuapp.com/users/addUser",
@@ -31,6 +31,7 @@ export const RegisterModal: React.FC<RegisterModalProps> = ({
         eMail: formInput.eMail,
       }
     );
+    getIsRegisterOpen(false);
     console.log(formInput.userName);
   };
   const changeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -60,7 +61,7 @@ export const RegisterModal: React.FC<RegisterModalProps> = ({
         }}
       >
         <Typography variant="h5">Register Form</Typography>
-        <form onSubmit={submitHandler}>
+        <FormControl variant="standard">
           <TextField
             label="UserName"
             name="userName"
@@ -76,26 +77,27 @@ export const RegisterModal: React.FC<RegisterModalProps> = ({
           <Button
             type="submit"
             size="large"
-            sx={{ top: "10%" }}
+            sx={{ top: "1rem" }}
             className="submitButton"
             color="primary"
             variant="contained"
+            onClick={submitHandler}
           >
             Submit
           </Button>
-        </form>
-        <Button
-          size="large"
-          className="backButton"
-          sx={{ top: "1rem" }}
-          color="secondary"
-          variant="contained"
-          onClick={() => {
-            getIsRegisterOpen(false);
-          }}
-        >
-          Back
-        </Button>
+          <Button
+            size="large"
+            className="backButton"
+            sx={{ top: "2rem" }}
+            color="secondary"
+            variant="contained"
+            onClick={() => {
+              getIsRegisterOpen(false);
+            }}
+          >
+            Back
+          </Button>
+        </FormControl>
       </Modal>
     </>
   );
