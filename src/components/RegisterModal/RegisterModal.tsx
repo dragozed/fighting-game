@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import Modal from "react-modal";
 import { Button, TextField, Typography } from "@mui/material";
 import axios from "axios";
@@ -13,8 +13,8 @@ interface RegisterModalProps {
 const salt = bcrypt.genSaltSync(10);
 
 export const RegisterModal: React.FC<RegisterModalProps> = ({
-  getIsRegisterOpen,
   isRegisterOpen,
+  getIsRegisterOpen,
 }) => {
   const [formInput, setFormInput] = useState({
     userName: "",
@@ -23,7 +23,6 @@ export const RegisterModal: React.FC<RegisterModalProps> = ({
   });
   const submitHandler = async (event: React.FormEvent<HTMLFormElement>) => {
     //async arrow func declaration
-    event.preventDefault(); //prevent page refresh
     await axios.post(
       "https://fighting-game-backend.herokuapp.com/users/addUser",
       {
@@ -40,7 +39,6 @@ export const RegisterModal: React.FC<RegisterModalProps> = ({
       ...FormInput,
       [event.target.name]: name,
     }));
-    console.log(formInput);
   };
   return (
     <>
