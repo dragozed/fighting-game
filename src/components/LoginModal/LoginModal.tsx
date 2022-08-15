@@ -3,8 +3,9 @@ import Modal from "react-modal";
 import { Button, TextField, Typography, FormControl } from "@mui/material";
 import axios from "axios";
 import bcrypt from "bcryptjs";
+import Cookies from "js-cookie";
 
-import { UserInfoContext } from "../../contexts/UserInfoContext";
+import { VillageStatusContext } from "../../contexts/VillageStatusContext";
 
 Modal.setAppElement("#root"); //to prevent assistive technologies such as screenreaders from reading content outside of the content of modal
 
@@ -19,7 +20,7 @@ export const LoginModal: React.FC<LoginModalProps> = ({
   getIsLoginOpen,
   getIsLoginSuccessful,
 }) => {
-  const { userInfo, setUserInfo } = useContext(UserInfoContext);
+  const { villageStatus, setVillageStatus } = useContext(VillageStatusContext);
 
   const [infoText, setInfoText] = useState(
     "Do not give your password to anyone else under any circumstances"
@@ -29,13 +30,11 @@ export const LoginModal: React.FC<LoginModalProps> = ({
     password: "",
   });
   const submitHandler = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
     let namePassMatchFlag = false;
     //async arrow func declaration
-    event.preventDefault(); //prevents page refresh
-    const response = await axios.get(
-      "https://fighting-game-backend.herokuapp.com/users"
-    );
-    const found = response.data.find(
+    const getUsers = await axios.get("https://fighting-game-backend.herokuapp.com/users");
+    const found = getUsers.data.find(
       (e: any) => e.userName === formInput.userName
     );
     if (typeof found === "undefined") {
@@ -48,8 +47,15 @@ export const LoginModal: React.FC<LoginModalProps> = ({
 
       if (namePassMatchFlag) {
         //Login Successful
+        const getVillageStatus = await axios.get(
+          "https://fighting-game-backend.herokuapp.com/villageStatus",
+          { params: { userName: found.userName } }
+        );
+        setVillageStatus(getVillageStatus.data[0].villageStatus); //getting 0th only more than 1 matching = S A D
+
+        Cookies.set("userInfo", JSON.stringify(found));
         getIsLoginSuccessful(true);
-        setUserInfo({ username: found.userName, email: found.eMail });
+
         setInfoText("Login Successful");
         getIsLoginOpen(false);
       } else {

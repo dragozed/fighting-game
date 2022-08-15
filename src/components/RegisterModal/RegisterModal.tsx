@@ -21,19 +21,24 @@ export const RegisterModal: React.FC<RegisterModalProps> = ({
     eMail: "",
     password: "",
   });
-  const submitHandler = async (/*event: React.FormEvent<HTMLFormElement>*/) => {
-    //async arrow func declaration
-    await axios.post(
-      "https://fighting-game-backend.herokuapp.com/users/addUser",
-      {
+
+  const submitVillageStatus =
+    async (/*event: React.FormEvent<HTMLFormElement>*/) => {
+      await axios.post("https://fighting-game-backend.herokuapp.com/villageStatus/addStatus", {
         userName: formInput.userName,
-        password: bcrypt.hashSync(formInput.password, salt), //encrypted password
-        eMail: formInput.eMail,
-      }
-    );
-    getIsRegisterOpen(false);
-    console.log(formInput.userName);
+      });
+      //async arrow func declaration
+    };
+
+  const submitUser = async (/*event: React.FormEvent<HTMLFormElement>*/) => {
+    //async arrow func declaration
+    await axios.post("https://fighting-game-backend.herokuapp.com/users/addUser", {
+      userName: formInput.userName,
+      password: bcrypt.hashSync(formInput.password, salt), //encrypted password
+      eMail: formInput.eMail,
+    });
   };
+
   const changeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     const name = event.target.value;
     setFormInput((FormInput) => ({
@@ -81,7 +86,11 @@ export const RegisterModal: React.FC<RegisterModalProps> = ({
             className="submitButton"
             color="primary"
             variant="contained"
-            onClick={submitHandler}
+            onClick={() => {
+              submitVillageStatus();
+              submitUser();
+              getIsRegisterOpen(false);
+            }}
           >
             Submit
           </Button>

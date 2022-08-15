@@ -1,7 +1,9 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import Modal from "react-modal";
 import ReactAudioPlayer from "react-audio-player";
 import { Button, Typography } from "@mui/material";
+import Cookies from "js-cookie";
+import axios from "axios";
 
 import { StageStatusContext } from "../../../contexts/StageStatusContext";
 import { VillageStatusContext } from "../../../contexts/VillageStatusContext";
@@ -24,10 +26,29 @@ export const EndStageModal: React.FC<EndStageModalProps> = ({
   const stageStatus = useContext(StageStatusContext);
   const { villageStatus, setVillageStatus } = useContext(VillageStatusContext);
 
+  const postVillageStatus = async () => {
+    console.log(villageStatus);
+    await axios.post("https://fighting-game-backend.herokuapp.com/villageStatus/updateStatus", {
+      userName: JSON.parse(Cookies.get("userInfo") || "").userName,
+      villageStatus:
+        //can not set vilageStatus directly
+        {
+          wood: villageStatus.wood,
+          iron: villageStatus.iron,
+          stone: villageStatus.stone,
+          trainingGroundsLevel: villageStatus.trainingGroundsLevel,
+          trainingGroundsWoodReq: villageStatus.trainingGroundsWoodReq,
+          trainingGroundsIronReq: villageStatus.trainingGroundsIronReq,
+          trainingGroundsStoneReq: villageStatus.trainingGroundsStoneReq,
+        },
+    });
+  };
+
   return (
     <Modal
       isOpen={modalIsOpen}
       onRequestClose={() => (
+        postVillageStatus(),
         setModalIsOpen(false),
         stageStatus.stagestatus === "allieswin" && stageStatus.stagenumber < 2
           ? (getIsGameStarted(true),
@@ -75,6 +96,7 @@ export const EndStageModal: React.FC<EndStageModalProps> = ({
           color="primary"
           variant="contained"
           onClick={() => {
+            postVillageStatus();
             setModalIsOpen(false);
             getIsGameStarted(true);
             stageStatus.stagestatus = "ongoing";
@@ -93,6 +115,7 @@ export const EndStageModal: React.FC<EndStageModalProps> = ({
         color="secondary"
         variant="contained"
         onClick={() => {
+          postVillageStatus();
           setModalIsOpen(false);
           getIsGameStarted(false);
           stageStatus.stagestatus = "ongoing";

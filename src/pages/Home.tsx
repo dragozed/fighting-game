@@ -1,5 +1,7 @@
 import React, { useState, useContext, useEffect } from "react";
 import { Button, Typography, AppBar, Toolbar, Box } from "@mui/material";
+import Cookies from "js-cookie";
+import axios from "axios";
 
 import { Field } from "../components/Field/Field";
 import { Village } from "../components/Village/Village";
@@ -7,11 +9,9 @@ import { RegisterModal } from "../components/RegisterModal/RegisterModal";
 import { LoginModal } from "../components/LoginModal/LoginModal";
 import { UserList } from "../components/UserList/UserList";
 
-import { UserInfoContext } from "../contexts/UserInfoContext";
 import { CharacterStatusContext } from "../contexts/CharacterStatusContext";
 import { CharacterListContext } from "../contexts/CharacterListContext";
 import { StageStatusContext } from "../contexts/StageStatusContext";
-import { VillageStatusContext } from "../contexts/VillageStatusContext";
 
 import "./Home.scss";
 
@@ -24,7 +24,7 @@ export const Home: React.FC = () => {
   const characterStatus = useContext(CharacterStatusContext);
   const characterList = useContext(CharacterListContext);
   let stageStatus = useContext(StageStatusContext);
-  const { userInfo, setUserInfo } = useContext(UserInfoContext);
+  const [userInfo, setUserInfo] = useState(Cookies.get("userInfo") || "");
 
   const getIsGameStarted = (isgamestarted: boolean): void => {
     setIsGameStarted(isgamestarted);
@@ -42,6 +42,34 @@ export const Home: React.FC = () => {
     setIsLoginSuccessful(isloginsuccessful);
   };
 
+  const logoutHandler = () => {
+    Cookies.remove("userInfo");
+    Cookies.remove("villageInfo");
+    setIsLoginSuccessful(false);
+  };
+
+  useEffect(() => {
+    //check login success using userInfo
+    if (userInfo === "") {
+      setIsLoginSuccessful(false);
+    } else {
+      setIsLoginSuccessful(true);
+      setVillageCookie();
+    }
+  }, []);
+
+  const setVillageCookie = async () => {
+    const getVillageStatus = await axios.get(
+      "https://fighting-game-backend.herokuapp.com/villageStatus",
+      {
+        params: {
+          userName: JSON.parse(Cookies.get("userInfo") || "").userName,
+        },
+      }
+    );
+    Cookies.set("villageInfo", getVillageStatus.data[0].villageStatus);
+  };
+
   return (
     <Box sx={{ bgcolor: "background.default" }} height={"100vh"}>
       <div className="home">
@@ -50,7 +78,22 @@ export const Home: React.FC = () => {
             <AppBar color="secondary" position="static">
               <Toolbar>
                 {isLoginSuccessful ? (
-                  "User:" + userInfo.username
+                  <>
+                    <Typography>
+                      {"User:" +
+                        JSON.parse(Cookies.get("userInfo") || "").userName}
+                    </Typography>
+                    <Button
+                      size="large"
+                      className="registerButton"
+                      color="primary"
+                      variant="contained"
+                      disabled={false}
+                      onClick={logoutHandler}
+                    >
+                      Logout
+                    </Button>
+                  </>
                 ) : (
                   <>
                     <Button
