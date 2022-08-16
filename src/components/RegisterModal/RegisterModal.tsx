@@ -22,21 +22,49 @@ export const RegisterModal: React.FC<RegisterModalProps> = ({
     password: "",
   });
 
+  const [infoText, setInfoText] = useState(
+    "Do not give your password to anyone else under any circumstances"
+  );
+
+  const submitHandler = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const getUsers = await axios.get(
+      "https://fighting-game-backend.herokuapp.com/users"
+    );
+    const found = getUsers.data.find(
+      (e: any) => e.userName === formInput.userName
+    );
+    if (typeof found === "undefined") {
+      //username is unique
+      submitVillageStatus();
+      submitUser();
+      setInfoText("Register is successful");
+      getIsRegisterOpen(false);
+    } else {
+      setInfoText("Username already exists");
+    }
+  };
+
   const submitVillageStatus =
     async (/*event: React.FormEvent<HTMLFormElement>*/) => {
-      await axios.post("https://fighting-game-backend.herokuapp.com/villageStatus/addStatus", {
-        userName: formInput.userName,
-      });
-      //async arrow func declaration
+      await axios.post(
+        "https://fighting-game-backend.herokuapp.com/villageStatus/addStatus",
+        {
+          userName: formInput.userName,
+        }
+      );
     };
 
   const submitUser = async (/*event: React.FormEvent<HTMLFormElement>*/) => {
     //async arrow func declaration
-    await axios.post("https://fighting-game-backend.herokuapp.com/users/addUser", {
-      userName: formInput.userName,
-      password: bcrypt.hashSync(formInput.password, salt), //encrypted password
-      eMail: formInput.eMail,
-    });
+    await axios.post(
+      "https://fighting-game-backend.herokuapp.com/users/addUser",
+      {
+        userName: formInput.userName,
+        password: bcrypt.hashSync(formInput.password, salt), //encrypted password
+        eMail: formInput.eMail,
+      }
+    );
   };
 
   const changeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -67,33 +95,30 @@ export const RegisterModal: React.FC<RegisterModalProps> = ({
       >
         <Typography variant="h5">Register Form</Typography>
         <FormControl variant="standard">
-          <TextField
-            label="UserName"
-            name="userName"
-            onChange={changeHandler}
-          />
-          <TextField label="E-Mail" name="eMail" onChange={changeHandler} />
-          <TextField
-            label="Password"
-            type="password"
-            name="password"
-            onChange={changeHandler}
-          />
-          <Button
-            type="submit"
-            size="large"
-            sx={{ top: "1rem" }}
-            className="submitButton"
-            color="primary"
-            variant="contained"
-            onClick={() => {
-              submitVillageStatus();
-              submitUser();
-              getIsRegisterOpen(false);
-            }}
-          >
-            Submit
-          </Button>
+          <form onSubmit={submitHandler}>
+            <TextField
+              label="UserName"
+              name="userName"
+              onChange={changeHandler}
+            />
+            <TextField label="E-Mail" name="eMail" onChange={changeHandler} />
+            <TextField
+              label="Password"
+              type="password"
+              name="password"
+              onChange={changeHandler}
+            />
+            <Button
+              type="submit"
+              size="large"
+              sx={{ top: "1rem" }}
+              className="submitButton"
+              color="primary"
+              variant="contained"
+            >
+              Submit
+            </Button>
+          </form>
           <Button
             size="large"
             className="backButton"
@@ -107,6 +132,9 @@ export const RegisterModal: React.FC<RegisterModalProps> = ({
             Back
           </Button>
         </FormControl>
+        <Typography variant="h6" sx={{ mt: "2rem" }}>
+          {infoText}
+        </Typography>
       </Modal>
     </>
   );

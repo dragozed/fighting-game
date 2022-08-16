@@ -30,10 +30,12 @@ export const LoginModal: React.FC<LoginModalProps> = ({
     password: "",
   });
   const submitHandler = async (event: React.FormEvent<HTMLFormElement>) => {
+    //async arrow func declaration
     event.preventDefault();
     let namePassMatchFlag = false;
-    //async arrow func declaration
-    const getUsers = await axios.get("https://fighting-game-backend.herokuapp.com/users");
+    const getUsers = await axios.get(
+      "https://fighting-game-backend.herokuapp.com/users"
+    );
     const found = getUsers.data.find(
       (e: any) => e.userName === formInput.userName
     );
