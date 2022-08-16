@@ -42,6 +42,7 @@ export const Village: React.FC<VillageProps> = ({ getIsVillageOpen }) => {
       villageStatus.iron >= villageStatus.trainingGroundsIronReq
     ) {
       setVillageStatus({
+        //set context
         wood: villageStatus.wood - villageStatus.trainingGroundsWoodReq,
         iron: villageStatus.iron - villageStatus.trainingGroundsIronReq,
         stone: villageStatus.stone - villageStatus.trainingGroundsStoneReq,
@@ -60,28 +61,32 @@ export const Village: React.FC<VillageProps> = ({ getIsVillageOpen }) => {
         ).stoneReq,
       });
       console.log(villageStatus);
-      await axios.post("https://fighting-game-backend.herokuapp.com/villageStatus/updateStatus", {
-        userName: JSON.parse(Cookies.get("userInfo") || "").userName,
-        villageStatus: {
-          //can not set vilageStatus directly
-          wood: villageStatus.wood - villageStatus.trainingGroundsWoodReq,
-          iron: villageStatus.iron - villageStatus.trainingGroundsIronReq,
-          stone: villageStatus.stone - villageStatus.trainingGroundsStoneReq,
-          trainingGroundsLevel: villageStatus.trainingGroundsLevel + 1,
-          trainingGroundsWoodReq: villageRequirementsCalculator(
-            "TrainingGrounds",
-            villageStatus.trainingGroundsLevel
-          ).woodReq,
-          trainingGroundsIronReq: villageRequirementsCalculator(
-            "TrainingGrounds",
-            villageStatus.trainingGroundsLevel
-          ).ironReq,
-          trainingGroundsStoneReq: villageRequirementsCalculator(
-            "TrainingGrounds",
-            villageStatus.trainingGroundsLevel
-          ).stoneReq,
-        },
-      });
+      await axios.post(
+        "https://fighting-game-backend.herokuapp.com/villageStatus/updateStatus",
+        {
+          //set DB
+          userName: JSON.parse(Cookies.get("userInfo") || "").userName,
+          villageStatus: {
+            //can not set vilageStatus directly
+            wood: villageStatus.wood - villageStatus.trainingGroundsWoodReq,
+            iron: villageStatus.iron - villageStatus.trainingGroundsIronReq,
+            stone: villageStatus.stone - villageStatus.trainingGroundsStoneReq,
+            trainingGroundsLevel: villageStatus.trainingGroundsLevel + 1,
+            trainingGroundsWoodReq: villageRequirementsCalculator(
+              "TrainingGrounds",
+              villageStatus.trainingGroundsLevel
+            ).woodReq,
+            trainingGroundsIronReq: villageRequirementsCalculator(
+              "TrainingGrounds",
+              villageStatus.trainingGroundsLevel
+            ).ironReq,
+            trainingGroundsStoneReq: villageRequirementsCalculator(
+              "TrainingGrounds",
+              villageStatus.trainingGroundsLevel
+            ).stoneReq,
+          },
+        }
+      );
     }
   };
 

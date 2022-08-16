@@ -12,6 +12,7 @@ import { UserList } from "../components/UserList/UserList";
 import { CharacterStatusContext } from "../contexts/CharacterStatusContext";
 import { CharacterListContext } from "../contexts/CharacterListContext";
 import { StageStatusContext } from "../contexts/StageStatusContext";
+import { VillageStatusContext } from "../contexts/VillageStatusContext";
 
 import "./Home.scss";
 
@@ -23,6 +24,7 @@ export const Home: React.FC = () => {
   const [isLoginSuccessful, setIsLoginSuccessful] = useState(false);
   const characterStatus = useContext(CharacterStatusContext);
   const characterList = useContext(CharacterListContext);
+  const { villageStatus, setVillageStatus } = useContext(VillageStatusContext);
   let stageStatus = useContext(StageStatusContext);
   const [userInfo, setUserInfo] = useState(Cookies.get("userInfo") || "");
 
@@ -45,6 +47,15 @@ export const Home: React.FC = () => {
   const logoutHandler = () => {
     Cookies.remove("userInfo");
     Cookies.remove("villageInfo");
+    setVillageStatus({
+      wood: 0,
+      stone: 0,
+      iron: 0,
+      trainingGroundsLevel: 0,
+      trainingGroundsWoodReq: 5,
+      trainingGroundsStoneReq: 5,
+      trainingGroundsIronReq: 0,
+    });
     setIsLoginSuccessful(false);
   };
 
