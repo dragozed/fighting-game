@@ -13,6 +13,7 @@ import { CharacterStatusContext } from "../contexts/CharacterStatusContext";
 import { CharacterListContext } from "../contexts/CharacterListContext";
 import { StageStatusContext } from "../contexts/StageStatusContext";
 import { VillageStatusContext } from "../contexts/VillageStatusContext";
+import { InventoryContext } from "../contexts/InventoryContext";
 
 import "./Home.scss";
 
@@ -25,6 +26,7 @@ export const Home: React.FC = () => {
   const characterStatus = useContext(CharacterStatusContext);
   const characterList = useContext(CharacterListContext);
   const { villageStatus, setVillageStatus } = useContext(VillageStatusContext);
+  const { inventory, setInventory } = useContext(InventoryContext);
   let stageStatus = useContext(StageStatusContext);
   const [userInfo, setUserInfo] = useState(Cookies.get("userInfo") || "");
 
@@ -46,7 +48,6 @@ export const Home: React.FC = () => {
 
   const logoutHandler = () => {
     Cookies.remove("userInfo");
-    Cookies.remove("villageInfo");
     setVillageStatus({
       wood: 0,
       stone: 0,
@@ -65,21 +66,8 @@ export const Home: React.FC = () => {
       setIsLoginSuccessful(false);
     } else {
       setIsLoginSuccessful(true);
-      setVillageCookie();
     }
   }, []);
-
-  const setVillageCookie = async () => {
-    const getVillageStatus = await axios.get(
-      "https://fighting-game-backend.herokuapp.com/villageStatus",
-      {
-        params: {
-          userName: JSON.parse(Cookies.get("userInfo") || "").userName,
-        },
-      }
-    );
-    Cookies.set("villageInfo", getVillageStatus.data[0].villageStatus);
-  };
 
   return (
     <Box sx={{ bgcolor: "background.default" }} height={"100vh"}>
@@ -152,9 +140,8 @@ export const Home: React.FC = () => {
                 variant="contained"
                 disabled={isGameStarted}
                 onClick={() => {
-                  //i am not sure why i should do it like that but other methods dont work
-                  characterList[0] = "character1";
-                  characterList[1] = "minion1";
+                  characterList[0] = inventory.characters[0];
+                  characterList[1] = inventory.minions[0];
                   characterStatus.character1 = "alive";
                   characterStatus.minion1 = "alive";
                   characterStatus.boss = "alive";

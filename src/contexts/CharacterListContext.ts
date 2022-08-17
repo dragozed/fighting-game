@@ -1,6 +1,6 @@
 import { createContext } from "react";
 
-let characterList = ["", ""];
+const characterList = ["", ""];
 
 //this shoud stay as list
 

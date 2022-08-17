@@ -36,6 +36,7 @@ export const RegisterModal: React.FC<RegisterModalProps> = ({
     );
     if (typeof found === "undefined") {
       //username is unique
+      submitInventory();
       submitVillageStatus();
       submitUser();
       setInfoText("Register is successful");
@@ -45,10 +46,20 @@ export const RegisterModal: React.FC<RegisterModalProps> = ({
     }
   };
 
+  const submitInventory =
+    async (/*event: React.FormEvent<HTMLFormElement>*/) => {
+      await axios.post(
+        "https://fighting-game-backend.herokuapp.com/inventory/createInventory",
+        {
+          userName: formInput.userName,
+        }
+      );
+    };
+
   const submitVillageStatus =
     async (/*event: React.FormEvent<HTMLFormElement>*/) => {
       await axios.post(
-        "https://fighting-game-backend.herokuapp.com/villageStatus/addStatus",
+        "https://fighting-game-backend.herokuapp.com/villageStatus/createStatus",
         {
           userName: formInput.userName,
         }
@@ -58,7 +69,7 @@ export const RegisterModal: React.FC<RegisterModalProps> = ({
   const submitUser = async (/*event: React.FormEvent<HTMLFormElement>*/) => {
     //async arrow func declaration
     await axios.post(
-      "https://fighting-game-backend.herokuapp.com/users/addUser",
+      "https://fighting-game-backend.herokuapp.com/users/createUser",
       {
         userName: formInput.userName,
         password: bcrypt.hashSync(formInput.password, salt), //encrypted password

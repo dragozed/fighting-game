@@ -23,7 +23,7 @@ interface MinionProps {
 }
 
 export const Minion: React.FC<MinionProps> = ({
-  characterName,
+  characterName, //character name group (minion,character etc)
   getDamageInfo,
   getCharacterName,
   damagedFlag,

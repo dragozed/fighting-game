@@ -8,6 +8,7 @@ import { EndStageModal } from "./EndStageModal/EndStageModal";
 
 import { StageStatusContext } from "../../contexts/StageStatusContext";
 import { VillageStatusContext } from "../../contexts/VillageStatusContext";
+import { InventoryContext } from "../../contexts/InventoryContext";
 
 import { stageRewardCalculator } from "./utils/stageRewardCalculator";
 import "./Field.scss";
@@ -26,11 +27,13 @@ export const Field: React.FC<FieldProps> = ({ getIsGameStarted }) => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const stageStatus = useContext(StageStatusContext);
   const { villageStatus, setVillageStatus } = useContext(VillageStatusContext);
+  const { inventory, setInventory } = useContext(InventoryContext);
 
   const getCharacterName = (charactername: string): void => {
     //if charactername doesnt exist push it
     if (characterNames.indexOf(charactername) === -1) {
       characterNames.push(charactername);
+      console.log(characterNames);
     }
   };
 
@@ -126,7 +129,7 @@ export const Field: React.FC<FieldProps> = ({ getIsGameStarted }) => {
       </Button>
       <div className="allies">
         <Character
-          characterName={"character1"}
+          characterName={inventory.characters[0]}
           getDamageInfo={getDamageInfo}
           getCharacterName={getCharacterName}
           damagedFlag={damagedFlag1}
@@ -134,7 +137,7 @@ export const Field: React.FC<FieldProps> = ({ getIsGameStarted }) => {
           bossTurn={bossTurn}
         />
         <Minion
-          characterName={"minion1"}
+          characterName={inventory.minions[0]}
           getDamageInfo={getDamageInfo}
           getCharacterName={getCharacterName}
           damagedFlag={damagedFlag2}

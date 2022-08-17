@@ -6,7 +6,7 @@ export const minionStatsCalculator = (name: string) => {
   let skillDamage = 0;
   let characterVisualName = "characterVisualName";
 
-  if (name === "minion1") {
+  if (name === "Lizard Minion") {
     healthPoints = 10;
     armor = 0;
     skillCount = 1;

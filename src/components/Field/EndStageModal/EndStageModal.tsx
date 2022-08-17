@@ -27,21 +27,23 @@ export const EndStageModal: React.FC<EndStageModalProps> = ({
   const { villageStatus, setVillageStatus } = useContext(VillageStatusContext);
 
   const postVillageStatus = async () => {
-    console.log(villageStatus);
-    await axios.post("https://fighting-game-backend.herokuapp.com/villageStatus/updateStatus", {
-      userName: JSON.parse(Cookies.get("userInfo") || "").userName,
-      villageStatus:
-        //can not set vilageStatus directly
-        {
-          wood: villageStatus.wood,
-          iron: villageStatus.iron,
-          stone: villageStatus.stone,
-          trainingGroundsLevel: villageStatus.trainingGroundsLevel,
-          trainingGroundsWoodReq: villageStatus.trainingGroundsWoodReq,
-          trainingGroundsIronReq: villageStatus.trainingGroundsIronReq,
-          trainingGroundsStoneReq: villageStatus.trainingGroundsStoneReq,
-        },
-    });
+    await axios.post(
+      "https://fighting-game-backend.herokuapp.com/villageStatus/updateStatus",
+      {
+        userName: JSON.parse(Cookies.get("userInfo") || "").userName,
+        villageStatus:
+          //can not set vilageStatus directly
+          {
+            wood: villageStatus.wood,
+            iron: villageStatus.iron,
+            stone: villageStatus.stone,
+            trainingGroundsLevel: villageStatus.trainingGroundsLevel,
+            trainingGroundsWoodReq: villageStatus.trainingGroundsWoodReq,
+            trainingGroundsIronReq: villageStatus.trainingGroundsIronReq,
+            trainingGroundsStoneReq: villageStatus.trainingGroundsStoneReq,
+          },
+      }
+    );
   };
 
   return (

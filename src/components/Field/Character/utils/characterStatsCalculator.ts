@@ -6,7 +6,7 @@ export const characterStatsCalculator = (name: string) => {
   let skillDamage = 0;
   let characterVisualName = "characterVisualName";
 
-  if (name === "character1") {
+  if (name === "Kong") {
     healthPoints = 50;
     armor = 0;
     skillCount = 1;

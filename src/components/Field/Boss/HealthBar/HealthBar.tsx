@@ -28,7 +28,6 @@ export const HealthBar: React.FC<HealthBarProps> = ({
 
   useEffect(() => {
     setHealthPercentage((healthPoints / maxHealthPoints) * 100);
-    console.log(healthPoints);
   }, [healthPoints, maxHealthPoints]);
 
   const styleHealthBar = (healthpercentage: number) => ({
