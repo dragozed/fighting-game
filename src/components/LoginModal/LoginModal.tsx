@@ -6,6 +6,7 @@ import bcrypt from "bcryptjs";
 import Cookies from "js-cookie";
 
 import { VillageStatusContext } from "../../contexts/VillageStatusContext";
+import { InventoryContext } from "../../contexts/InventoryContext";
 
 Modal.setAppElement("#root"); //to prevent assistive technologies such as screenreaders from reading content outside of the content of modal
 
@@ -21,6 +22,7 @@ export const LoginModal: React.FC<LoginModalProps> = ({
   getIsLoginSuccessful,
 }) => {
   const { villageStatus, setVillageStatus } = useContext(VillageStatusContext);
+  const { inventory, setInventory } = useContext(InventoryContext);
 
   const [infoText, setInfoText] = useState(
     "Do not give your password to anyone else under any circumstances"
@@ -54,6 +56,12 @@ export const LoginModal: React.FC<LoginModalProps> = ({
           { params: { userName: found.userName } }
         );
         setVillageStatus(getVillageStatus.data[0].villageStatus); //getting 0th only more than 1 matching = S A D
+
+        const getInventory = await axios.get(
+          "https://fighting-game-backend.herokuapp.com/inventory",
+          { params: { userName: found.userName } }
+        );
+        setInventory(getInventory.data[0].inventory);
 
         Cookies.set("userInfo", JSON.stringify(found));
         getIsLoginSuccessful(true);

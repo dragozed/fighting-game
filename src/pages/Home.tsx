@@ -5,6 +5,7 @@ import axios from "axios";
 
 import { Field } from "../components/Field/Field";
 import { Village } from "../components/Village/Village";
+import { Inventory } from "../components/Inventory/Inventory";
 import { RegisterModal } from "../components/RegisterModal/RegisterModal";
 import { LoginModal } from "../components/LoginModal/LoginModal";
 import { UserList } from "../components/UserList/UserList";
@@ -22,6 +23,7 @@ export const Home: React.FC = () => {
   const [isVillageOpen, setIsVillageOpen] = useState(false);
   const [isRegisterOpen, setIsRegisterOpen] = useState(false);
   const [isLoginOpen, setIsLoginOpen] = useState(false);
+  const [isInventoryOpen, setIsInventoryOpen] = useState(false);
   const [isLoginSuccessful, setIsLoginSuccessful] = useState(false);
   const characterStatus = useContext(CharacterStatusContext);
   const characterList = useContext(CharacterListContext);
@@ -41,6 +43,9 @@ export const Home: React.FC = () => {
   };
   const getIsLoginOpen = (isloginopen: boolean): void => {
     setIsLoginOpen(isloginopen);
+  };
+  const getIsInventoryOpen = (isinventoryopen: boolean): void => {
+    setIsInventoryOpen(isinventoryopen);
   };
   const getIsLoginSuccessful = (isloginsuccessful: boolean): void => {
     setIsLoginSuccessful(isloginsuccessful);
@@ -72,7 +77,11 @@ export const Home: React.FC = () => {
   return (
     <Box sx={{ bgcolor: "background.default" }} height={"100vh"}>
       <div className="home">
-        {!isGameStarted && !isVillageOpen && !isRegisterOpen && !isLoginOpen ? ( //main menu
+        {!isGameStarted &&
+        !isVillageOpen &&
+        !isRegisterOpen &&
+        !isLoginOpen &&
+        !isInventoryOpen ? ( //main menu
           <>
             <AppBar color="secondary" position="static">
               <Toolbar>
@@ -165,6 +174,19 @@ export const Home: React.FC = () => {
               >
                 Village
               </Button>
+              <Button //start button
+                size="large"
+                sx={{ margin: "1rem" }}
+                className="villageButton"
+                color="primary"
+                variant="contained"
+                disabled={isGameStarted}
+                onClick={() => {
+                  setIsInventoryOpen(true);
+                }}
+              >
+                Inventory
+              </Button>
             </div>
           </>
         ) : isGameStarted ? (
@@ -186,6 +208,8 @@ export const Home: React.FC = () => {
             getIsLoginOpen={getIsLoginOpen}
             getIsLoginSuccessful={getIsLoginSuccessful}
           />
+        ) : isInventoryOpen ? (
+          <Inventory getIsInventoryOpen={getIsInventoryOpen} />
         ) : (
           "You Shouldnt be here"
         )}

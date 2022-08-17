@@ -10,7 +10,7 @@ export const minionStatsCalculator = (name: string) => {
     healthPoints = 10;
     armor = 0;
     skillCount = 1;
-    skillName = "Attack2(25)";
+    skillName = "Spit";
     skillDamage = 25;
     characterVisualName = "Lizard Minion";
   }

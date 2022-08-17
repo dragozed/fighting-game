@@ -54,6 +54,9 @@ export const Character: React.FC<CharacterProps> = ({
   const [characterVisualName, setCharacterVisualName] = useState(
     characterStatsCalculator(characterName).characterVisualName
   );
+  const [characterImage, setCharacterImage] = useState(
+    characterStatsCalculator(characterName).characterImage
+  );
   const [skillTarget, setSkillTarget] = useState("");
   const [skillBarDisabled, setSkillBarDisabled] = useState(false);
 
@@ -153,10 +156,7 @@ export const Character: React.FC<CharacterProps> = ({
             characterVisualName={characterVisualName}
           />
         </div>
-        <img
-          className="character1"
-          src="https://scitechdaily.com/images/Great-Ape-Gorilla.jpg"
-        ></img>
+        <img className="character1" src={characterImage}></img>
         <div className="character1-bottombar">
           <SkillBar
             disabled={skillBarDisabled}
