@@ -7,7 +7,6 @@ import axios from "axios";
 import { InventoryContext } from "../../contexts/InventoryContext";
 
 import "./Inventory.scss";
-import { minWidth } from "@mui/system";
 
 interface InventoryProps {
   getIsInventoryOpen: (isinventoryopen: boolean) => void;
@@ -34,8 +33,14 @@ export const Inventory: React.FC<InventoryProps> = ({ getIsInventoryOpen }) => {
   };
 
   const handleChange = (event: SelectChangeEvent) => {
-    const string = event.target.value as string;
-    console.log(string, inventory.characters);
+    const value = event.target.value as string;
+    const string = value.split("/");
+    if (inventory.characters[0] !== string[0]) {
+      let newInventory = inventory;
+      newInventory.characters[parseInt(string[1])] = newInventory.characters[0];
+      newInventory.characters[0] = string[0];
+      setInventory(newInventory);
+    }
   };
 
   return (
@@ -54,7 +59,7 @@ export const Inventory: React.FC<InventoryProps> = ({ getIsInventoryOpen }) => {
             onChange={handleChange}
           >
             {inventory.characters.map((character, index) => (
-              <MenuItem value={character} key={index}>
+              <MenuItem value={character + "/" + index} key={index}>
                 {character}
               </MenuItem>
             ))}
