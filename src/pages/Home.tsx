@@ -143,7 +143,7 @@ export const Home: React.FC = () => {
               </Typography>
               <Button //start button
                 size="large"
-                sx={{ margin: "2rem" }}
+                sx={{ margin: "1rem" }}
                 className="startButton"
                 color="primary"
                 variant="contained"
