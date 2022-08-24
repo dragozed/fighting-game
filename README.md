@@ -9,3 +9,4 @@ Fighting game is a roguelike game where the player tries to defeat stages using 
 ## Backend
 
 You can find backend repo for this project [here](https://github.com/dragozed/fighting-game-backend).
+I am using free heroku on backend so it runs out of free trial hours close to end of the month.
